@@ -81,9 +81,9 @@ const LandParcel = ({ landData }: {landData: any}) => {
             <p><span className="font-semibold">Harvest Date:</span> {crop.harvestDate}</p>
             <p><span className="font-semibold">Yield Amount:</span> {crop.yieldAmount} kg</p>
 
-            <h4 className="font-semibold mt-2">Investment Data</h4>
+            {/* <h4 className="font-semibold mt-2">Investment Data</h4> */}
             {crop.investmentData.map((investment, invIndex) => (
-              <div key={invIndex} className="ml-4">
+              <div key={invIndex} className="">
                 <p><span className="font-semibold">Investor:</span> {investment.investor}</p>
                 <p><span className="font-semibold">Investment Amount:</span> {investment.investmentAmount} USD</p>
                 <p><span className="font-semibold">Investment Date:</span> {investment.investmentDate}</p>

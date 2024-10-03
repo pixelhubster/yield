@@ -1,11 +1,12 @@
 import Leftpanel from "@/components/leftpanel";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa"; 
+import Rightpanel from "@/components/rightpanel";
 
 
 export default function Home() {
    return (
       <main className="w-full h-screen bg-white
-      "> 
+      ">
 
          <div className="w-full h-[5rem] bg-black flex justify-between items-center px-5 lg:px-10">
             <a href="http://" target="_blank" rel="noopener noreferrer">Yield</a>
@@ -31,10 +32,7 @@ export default function Home() {
 
          <div className="w-full h-[92vh] bg-blue-400 flex">
             <Leftpanel />
-            <div className="w-full h-full bg-green-400 flex flex-col p-5">
-               <div className="w-full h-full bg-white rounded-xl">hh</div>
-               <div className="w-full h-[18rem] bg-yellow-200 mt-5">hh</div>
-            </div>
+           <Rightpanel />
          </div>
 
       </main>
