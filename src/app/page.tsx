@@ -30,7 +30,7 @@ export default function Home() {
             </div>
          </div>
 
-         <div className="w-full h-[92vh] bg-blue-400 flex">
+         <div className="w-full h-[92vh] bg-blue-400 flex ">
             <Leftpanel />
            <Rightpanel />
          </div>
