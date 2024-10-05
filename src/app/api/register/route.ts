@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
       const body = await req.json();
       const dummy = { "name": body.landName, "geo_json": { "type": "Feature", "properties": {}, "geometry": { "type": "Polygon", "coordinates": body.coordinates } } }
       // Send the polygon to the Agromonitoring API
-      const response = await fetch("http://api.agromonitoring.com/agro/1.0/polygons?appid=3b87578fd3bdb941cfe5b24122812690", {
+      const response = await fetch("http://api.agromonitoring.com/agro/1.0/polygons?appid=3b87578fd3bdb941cfe5b24122812690&duplicated=true", {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
@@ -24,10 +24,8 @@ export async function POST(req: NextRequest) {
       const uploadData = await pinata.upload.file(file)
       // const url = await pinata.gateways.createSignedURL({ cid: uploadData.cid, expires: 36000})
 
-
-
       // Return success response
-      return NextResponse.json({cid: uploadData.cid, success: "ok" }, { status: 200 });
+      return NextResponse.json({cid: uploadData.cid, polygon: body.coordinates, success: "ok" }, { status: 200 });
    } catch (error) {
       console.error("Error:", error);
       return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
