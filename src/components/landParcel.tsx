@@ -4,7 +4,6 @@ import { GiIsland } from "react-icons/gi";
 import { GiFarmer } from "react-icons/gi";
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandParcel = ({ landData }: {landData: any}) => {
   return (
     <div className="w-[20rem] h-full text-black shadow-lg rounded-lg p-0 z-0 px-0 overflow-x-hidden">

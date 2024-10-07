@@ -26,7 +26,7 @@ const Map = ({ openfn, setMapLayer, mapLayer, toPolygon} : {openfn?: Function, s
    useEffect(() => {
       if (mapLayer.length !== 0) (openfn as Function)(true)
       else (openfn as Function)(false)
-   }, [mapLayer])
+   }, [mapLayer, openfn])
    toPolygon(mapLayer)
    const onCreate = (e: any)=> {
       console.log(e)
