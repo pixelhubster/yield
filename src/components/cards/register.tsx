@@ -4,6 +4,7 @@ import { IoMdClose } from 'react-icons/io'
 import TextInput from './textInput'
 import { landContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
+import toast from 'react-hot-toast'
 
 const RegisterContainer = ({ polygon }: { polygon: any }) => {
    const account = useAccount()
@@ -16,6 +17,7 @@ const RegisterContainer = ({ polygon }: { polygon: any }) => {
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
+      if (account.status === "disconnected") toast.error("Wallet not connected")
       try {
          const res = await fetch("/api/register", {
             method: "POST",
@@ -28,13 +30,14 @@ const RegisterContainer = ({ polygon }: { polygon: any }) => {
             })
          })
          const data = await res.json()
-         console.log(data)
+         // console.log(data)
          if (res.ok) {
-            landContract.methods.register(data.cid, data.polygon).send({ from: account.address })
+            await landContract.methods.register(account.address, data.cid, String(data.polygon)).send({ from: account.address })
          }
-
-      } catch(error) {
+         toast.success("Registered Land Succesfully!")
+      } catch (error) {
          console.log(error)
+         toast.error("Failed to register land - try again")
       }
    }
    return (
