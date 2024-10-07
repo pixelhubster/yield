@@ -25,15 +25,15 @@ export async function POST(req: NextRequest) {
       const weatherRes = await fetch(`https://api.agromonitoring.com/agro/1.0/weather?lat=${data.center[0]}&lon=${data.center[1]}&appid=${appid}`)
       const weatherData = await weatherRes.json()
 
-      const dataJson = JSON.stringify({ ...body, ...data, ...weatherData, ...soilData})
-      console.log(JSON.parse(dataJson));
+      const dataJson = JSON.stringify({ ...body, ...data, weather: {...weatherData}, ...soilData})
+      // console.log(JSON.parse(dataJson));
       const date = new Date()
       const file = new File([dataJson], `${date}.json`, { type: "application/json"})
       const uploadData = await pinata.upload.file(file)
       // const url = await pinata.gateways.createSignedURL({ cid: uploadData.cid, expires: 36000})
 
       // Return success response
-      return NextResponse.json({cid: uploadData.cid, polygon: body.coordinates, success: "ok" }, { status: 200 });
+      return NextResponse.json({cid: uploadData.cid, polygon: body.coordinates, center: data.center, polygonId: data.id, success: "ok" }, { status: 200 });
    } catch (error) {
       console.error("Error:", error);
       return NextResponse.json({ error: "Something went wrong" }, { status: 500 });

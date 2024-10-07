@@ -32,7 +32,8 @@ const RegisterContainer = ({ polygon }: { polygon: any }) => {
          const data = await res.json()
          // console.log(data)
          if (res.ok) {
-            await landContract.methods.register(account.address, data.cid, String(data.polygon)).send({ from: account.address })
+            const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
+            console.log(tokenId)
          }
          toast.success("Registered Land Succesfully!")
       } catch (error) {
