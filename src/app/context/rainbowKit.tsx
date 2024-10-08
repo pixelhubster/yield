@@ -6,8 +6,8 @@ import { baseSepolia } from "wagmi/chains"
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query"
 
 const config = getDefaultConfig({
-   appName: "drugLedger",
-   projectId: process.env.NEXT_PUBLIC_APP_ID as string,
+   appName: "yield",
+   projectId: process.env.NEXT_PUBLIC_PROJECT_ID as string || "",
    chains: [baseSepolia],
    ssr: true
 })
