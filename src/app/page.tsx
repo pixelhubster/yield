@@ -1,5 +1,4 @@
 import Leftpanel from "@/components/leftpanel";
-import { FaSearch } from "react-icons/fa"; 
 import Rightpanel from "@/components/rightpanel";
 import Navbar from "@/components/navbar";
 
