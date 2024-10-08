@@ -8,12 +8,10 @@ import toast from 'react-hot-toast'
 
 const RegisterContainer = ({ polygon }: { polygon: any }) => {
    const account = useAccount()
-   // console.log(account)
    const [value, setValue] = useState({
       ownershipType: "private"
    })
    const handleChange = (e: any) => {
-      // const key = label.replaceAll(" ", "");
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
@@ -68,9 +66,6 @@ const RegisterContainer = ({ polygon }: { polygon: any }) => {
                </label>
             </div>
             <p><span className="font-semibold text-sm">Polygon:</span>
-               <pre className='text-[12px]'>
-                  {JSON.stringify(polygon[0])}
-               </pre>
             </p>
          </div>
 

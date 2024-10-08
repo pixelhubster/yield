@@ -16,8 +16,6 @@ const Rightpanel = () => {
          const array: any = []
          l.latlngs.map((latlng: any, index: number) => {
             array.push([latlng.lat, latlng.lng])
-            // console.log(l.latlngs.length, index)
-            // if (l.latlngs.length === index + 1) array[index].push(array[index][0])
          })
          newArray.push([...array, array[0]])
       });

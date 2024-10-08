@@ -6,7 +6,6 @@ import L, { circle } from "leaflet"
 import { EditControl } from 'react-leaflet-draw'
 import { LatLngExpression } from 'leaflet'
 import "leaflet-draw/dist/leaflet.draw.css"
-import dynamic from 'next/dynamic'
 
 const center: LatLngExpression = [51.5680403, -0.0509105]
 const purpleOptions = { color: 'green'}
@@ -65,7 +64,6 @@ const Map = ({ openfn, setMapLayer, mapLayer, toPolygon} : {openfn?: Function, s
                marker: false
             }}
             />
-            <button>jjj</button>
          </FeatureGroup>
          <TileLayer
              attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

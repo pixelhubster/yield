@@ -1,7 +1,6 @@
 import React from 'react'
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
-
 const Summary = ({ header, data, className}: {header: string, data: string, className: string}) => {
    return (
       <div className={`w-[13rem] h-full flex rounded-xl border border-black shadow-sm flex-col justify-center items-center relative ${className}`}>
