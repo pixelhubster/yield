@@ -5,6 +5,7 @@ import LandParcel from './landParcel'
 import { FaRegCopy } from "react-icons/fa6";
 import Image from 'next/image';
 import maize from "../../public/maize.webp"
+import RegisterCrop from './cards/registerCrop';
 
 const Leftpanel = () => {
    const [tab, setTab] = useState<boolean>(false)
@@ -40,7 +41,7 @@ const Leftpanel = () => {
             <p className='font-bold text-black'>nyuiela.base.eth</p>
             <div>0x5444....334 <button><FaRegCopy /></button></div>
          </div>
-
+         <RegisterCrop />
 
          <div className='w-full h-full max-h-full bg-white mt-8 pt-8 rounded-xl px-5 shrink overflow-hidden'>
             <div className="w-full h-[3.5rem] rounded-full flex justify-center items-center bg-black p-[6px]">
