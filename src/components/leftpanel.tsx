@@ -17,16 +17,19 @@ const Leftpanel = () => {
     console.log(getUnixTimestamp());  // 
    const get = async () => {
       const date = getUnixTimestamp()
-      console.log(date)
-      // const res = await fetch(`https://api.agromonitoring.com/image/1.0/${date}/670041676419591af8d66659?appid=3b87578fd3bdb941cfe5b24122812690`)86400
       const polygon = "670041676419591af8d66659";
       const appid = "3b87578fd3bdb941cfe5b24122812690";
-      const res = await fetch(`https://api.agromonitoring.com/agro/1.0/image/search?start=${date-86400}&end=${date}&polyid=${polygon}&appid=${appid}`)
-      const data = await res.json()
-      console.log(data)
-      return data
+      try {
+         const res = await fetch(`https://api.agromonitoring.com/agro/1.0/image/search?start=${date-86400}&end=${date}&polyid=${polygon}&appid=${appid}`)
+         const data = await res.json()
+         console.log(data)
+         return data
+
+      } catch (error) {
+         console.log(error)
+      }
    }
-   get()
+   // get()
    return (
       <div className="w-[20rem] xl:w-[25%] sm:w-[25rem] h-full bg-red-400 p-5 flex flex-col">
 

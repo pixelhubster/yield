@@ -2,29 +2,44 @@
 import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import TextInput from './textInput'
+import { landContract } from '@/backend/web3'
+import { useAccount } from 'wagmi'
+import toast from 'react-hot-toast'
 
 const RegisterContainer = ({ polygon }: { polygon: any }) => {
+   const account = useAccount()
+   // console.log(account)
    const [value, setValue] = useState({
       ownershipType: "private"
    })
-   console.log(value)
    const handleChange = (e: any) => {
       // const key = label.replaceAll(" ", "");
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
-      const res = await fetch("/api/register", {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json"
-         },
-         body: JSON.stringify({
-            ...value,
-            coordinates: polygon
+      if (account.status === "disconnected") toast.error("Wallet not connected")
+      try {
+         const res = await fetch("/api/register", {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               ...value,
+               coordinates: polygon
+            })
          })
-      })
-      const data = await res.json()
-      // console.log(data)
+         const data = await res.json()
+         // console.log(data)
+         if (res.ok) {
+            const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
+            console.log(tokenId)
+         }
+         toast.success("Registered Land Succesfully!")
+      } catch (error) {
+         console.log(error)
+         toast.error("Failed to register land - try again")
+      }
    }
    return (
       <div className='w-[30rem] rounded-md h-full bg-gray-800 relative overflow-hidden shadow'>
@@ -54,7 +69,7 @@ const RegisterContainer = ({ polygon }: { polygon: any }) => {
             </div>
             <p><span className="font-semibold text-sm">Polygon:</span>
                <pre className='text-[12px]'>
-                  {JSON.stringify(polygon[0], 0, 2)}
+                  {JSON.stringify(polygon[0])}
                </pre>
             </p>
          </div>

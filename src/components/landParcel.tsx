@@ -4,8 +4,6 @@ import { GiIsland } from "react-icons/gi";
 import { GiFarmer } from "react-icons/gi";
 
 
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandParcel = ({ landData }: {landData: any}) => {
   return (
     <div className="w-[20rem] h-full text-black shadow-lg rounded-lg p-0 z-0 px-0 overflow-x-hidden">
@@ -74,7 +72,7 @@ const LandParcel = ({ landData }: {landData: any}) => {
         <GiFarmer fontSize={40}/>
         </div>
         <div className='text-[14px]'>
-        {landData.cropData.map((crop, index) => (
+        {landData.cropData.map((crop: any, index: any) => (
            <div key={index} className="mb-2">
             <p><span className="font-semibold">Crop Type:</span> {crop.cropType}</p>
             <p><span className="font-semibold">Planting Date:</span> {crop.plantingDate}</p>
@@ -82,7 +80,7 @@ const LandParcel = ({ landData }: {landData: any}) => {
             <p><span className="font-semibold">Yield Amount:</span> {crop.yieldAmount} kg</p>
 
             {/* <h4 className="font-semibold mt-2">Investment Data</h4> */}
-            {crop.investmentData.map((investment, invIndex) => (
+            {crop.investmentData.map((investment: any, invIndex: any) => (
               <div key={invIndex} className="">
                 <p><span className="font-semibold">Investor:</span> {investment.investor}</p>
                 <p><span className="font-semibold">Investment Amount:</span> {investment.investmentAmount} USD</p>
@@ -103,7 +101,7 @@ const LandParcel = ({ landData }: {landData: any}) => {
         <GiIsland fontSize={40}/>
         </div>
         <div className='text-[14px]'>
-        {landData.mortgagesAndLoans.map((loan, index) => (
+        {landData.mortgagesAndLoans.map((loan: any, index: any) => (
           <div key={index} className="mb-2">
             <p><span className="font-semibold">Lender:</span> {loan.lender}</p>
             <p><span className="font-semibold">Loan Amount:</span> {loan.loanAmount} USD</p>
