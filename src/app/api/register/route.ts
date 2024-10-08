@@ -1,7 +1,7 @@
 import pinata from "@/backend/ipfs";
 import { NextRequest, NextResponse } from "next/server"
 
-const appid = "3b87578fd3bdb941cfe5b24122812690"
+const appid = process.env.AGROMONITORING_API_KEY
 export async function POST(req: NextRequest) {
    try {
       // Parse the request body as JSON
