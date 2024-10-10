@@ -17,7 +17,7 @@ const Statistics = () => {
       <Summary header="Loan Interest Rate" data="23200300" className="bg-white text-black" />
    </div>
 
-   <div className={`w-full h-full flex rounded-xl border border-black bg-black shadow-md flex-col justify-center items-center relative overflow-hidden pt-5`}>
+   <div className={`w-full h-full flex rounded-xl border border-black bg-black shadow-md flex-col justify-center items-center relative overflow-hidden pt-5 min-w-[13rem]`}>
       <div className="w-full h-full overflow-hidden flex">
          <Mincard />
          <Mincard />
