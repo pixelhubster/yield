@@ -1,10 +1,48 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import { CiLocationArrow1 } from "react-icons/ci";
 import { GiIsland } from "react-icons/gi";
 import { GiFarmer } from "react-icons/gi";
 
 
 const LandParcel = ({ landData }: {landData: any}) => {
+   const [parcel, setParcel] = useState<any>({
+      dt: 0,
+      t0: 0,
+      t10: 0,
+      moisture: 0,
+      weather: {
+         dt: 0,
+         clouds: {all: 0},
+         weather: {
+            id: 0,
+            dt: 0,
+            main: 0,
+            icon: 0,
+            description: 0
+         },
+         main: {
+            temp_min: 0,
+            temp_max: 0,
+            temp: 0,
+            pressure: 0,
+         },
+         wind: {
+            speed: 0,
+            deg: 0
+         }
+      }
+   })
+   const getYieldInfo = async () => {
+      const res = await fetch("/api/register");
+      const data = await res.json()
+      console.log(data.data)
+      setParcel(data.data ?? data.data[0])
+   }
+   console.log(parcel)
+   useEffect(() => {
+      getYieldInfo()
+   }, [])
   return (
     <div className="w-[20rem] h-full text-black shadow-lg rounded-lg p-0 z-0 px-0 overflow-x-hidden">
       {/* <h2 className="text-2xl font-bold mb-4 text-center">Land Parcel Information</h2> */}
@@ -35,19 +73,53 @@ const LandParcel = ({ landData }: {landData: any}) => {
 
       {/* Fertility and Climate */}
       <div className="pb-4 mb-4 bg-gray-100 p-5">
-        <h3 className="text-md font-semibold mb-2 text-center">Land Conditions</h3>
+        <h3 className="text-md font-semibold mb-2 text-center">Soil Conditions</h3>
 
         <div className='flex'>
         <div className='px-4'>
         <GiIsland fontSize={40}/>
         </div>
         <div className='text-[14px]'>
-        <p><span className="font-semibold">Fertility Score:</span> {landData.fertilityScore}</p>
-        <p><span className="font-semibold">Soil Type:</span> {landData.soilType}</p>
-        <p><span className="font-semibold">Average Temperature:</span> {landData.climateData.averageTemperature} °C</p>
-        <p><span className="font-semibold">Average Rainfall:</span> {landData.climateData.averageRainfall} mm</p>
-        <p><span className="font-semibold">Soil Moisture:</span> {landData.climateData.soilMoisture}</p>
+        {/* <p><span className="font-semibold">Fertility Score:</span> {landData.fertilityScore}</p>
+        <p><span className="font-semibold">Soil Type:</span> {landData.soilType}</p> */}
+        <p><span className="font-semibold">Updated at:</span> {parcel.dt}</p>
+        {/* <p><span className="font-semibold">Average Temperature:</span> {landData.climateData.averageTemperature} °C</p> */}
+        <p><span className="font-semibold">Average Rainfall:</span> {parcel.t0} mm</p>
+        <p><span className="font-semibold">Surface Temperature:</span> {parcel.t0} K</p>
+        <p><span className="font-semibold">Temperature (10cm depth):</span> {parcel.t10} K</p>
+        <p><span className="font-semibold">Soil Moisture:</span> {parcel.moisture} m3/m3</p>
 
+         </div>
+        </div>
+      </div>
+
+
+      {/* Weather */}
+      <div className="pb-4 mb-4 bg-gray-100 p-5">
+        <h3 className="text-md font-semibold mb-2 text-center">Weather Conditions</h3>
+
+        <div className='flex'>
+        <div className='px-4'>
+        <GiIsland fontSize={20}/>
+        </div>
+        <div className='text-[14px]'>
+        {/* <p><span className="font-semibold">Fertility Score:</span> {landData.fertilityScore}</p>
+        <p><span className="font-semibold">Soil Type:</span> {landData.soilType}</p> */}
+        <p><span className="font-semibold">Updated At:</span> {parcel.weather.dt}</p>
+        <p><span className="font-semibold">Weather Id:</span> {parcel.weather.weather.id}</p>
+        <p><span className="font-semibold">Clouds:</span> {parcel.weather.clouds.all} %</p>
+        <p><span className="font-semibold">Clouds:</span> {parcel.weather.weather.main} °C</p>
+        <p><span className="font-semibold">Icon:</span> {parcel.weather.weather.icon} °C</p>
+        <p><span className="font-semibold">Weather Description:</span> {parcel.weather.weather.description} mm</p>
+        <p><span className="font-semibold">Temperature:</span> {parcel.weather.main.temp} K</p>
+        <p><span className="font-semibold">Min Temperature:</span> {parcel.weather.main.temp_min} K</p>
+        <p><span className="font-semibold">Max Temperature:</span> {parcel.weather.main.temp_max} K</p>
+        <p><span className="font-semibold">Atmospheric Pressure (sea level/grnd level):</span> {parcel.weather.main.pressure} hPa</p>
+        <p><span className="font-semibold">Sea level (sea level/grnd level):</span> {parcel.weather.main.sea_level} hPa</p>
+        <p><span className="font-semibold">Grnd level (sea level/grnd level):</span> {parcel.weather.main.grnd_level} hPa</p>
+        <p><span className="font-semibold">Wind Speed:</span> {parcel.weather.wind.speed} m/sec</p>
+        <p><span className="font-semibold">Wind Deg:</span> {parcel.weather.wind.deg} degree</p>
+        <p><span className="font-semibold">Humility:</span> {parcel.weather.main.pressure} K</p>
          </div>
         </div>
       </div>

@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
       }
       const date = new Date()
       const file = new File([JSON.stringify(returnData)], `${date}.json`, { type: "application/json"})
+      console.log(returnData)
       const uploadData = await pinata.upload.file(file)
       return NextResponse.json(uploadData.cid, { status: 200 })
    } catch (error) {
@@ -35,7 +36,7 @@ async function fetchData(data: any) {
       const soilData = await soilRequest.json()
       const weatherRequest = await fetch(`https://api.agromonitoring.com/agro/1.0/weather?lat=${data.lat}&lon=${data.log}&appid=${appid}`)
       const weatherData = await weatherRequest.json()
-      const dataJson = JSON.stringify({ weather: { ...weatherData }, ...soilData })
+      const dataJson = { weather: { ...weatherData }, ...soilData }
       return dataJson
    } catch (error) {
       console.log(error)
