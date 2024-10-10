@@ -1,6 +1,8 @@
 import React from 'react'
 import Mincard from './cards/mincard'
 import Summary from './cards/summary'
+import BorrowModal from './modals/borrow'
+import RepayModal from './modals/repay'
 
 const Statistics = () => {
   return (
@@ -26,7 +28,9 @@ const Statistics = () => {
          <Mincard />
          <Mincard />
       </div>
-      <button className="w-[96%] flex justify-center items-center shrink m-2 mx-5 bg-blue-600 p-4 rounded-xl shadow-xl">invest</button>
+      {/* <button className="w-[96%] flex justify-center items-center shrink m-2 mx-5 bg-blue-600 p-4 rounded-xl shadow-xl">invest</button> */}
+      <BorrowModal />
+      <RepayModal />
    </div>
 </div>
   )

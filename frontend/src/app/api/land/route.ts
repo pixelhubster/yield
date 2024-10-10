@@ -20,9 +20,11 @@ export async function GET(req: NextRequest) {
             returnData.push(newData)
          }
       }
+
       const date = new Date()
-      const file = new File([JSON.stringify(returnData)], `${date}.json`, { type: "application/json"})
-      console.log(returnData)
+      const fileData = { data: returnData }
+      const file = new File([JSON.stringify(fileData)], `${date}.json`, { type: "application/json"})
+      console.log(JSON.parse(JSON.stringify(returnData)))
       const uploadData = await pinata.upload.file(file)
       return NextResponse.json(uploadData.cid, { status: 200 })
    } catch (error) {
