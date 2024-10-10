@@ -4,7 +4,7 @@ import InputWithLabel from '../cards/inputWithLabel'
 const BorrowModal = () => {
    return (
       <>
-         <label htmlFor="my_modal_10" className="btn bg-white text-black border-gray-100 hover:bg-gray-100 w-full ">Borrow</label>
+         <label htmlFor="my_modal_10" className="btn bg-[#150578]/90 hover:bg-[#150578] w-[95%] my-2 flex-1 shrink border-0 text-white">Borrow</label>
 
          <input type="checkbox" id="my_modal_10" className="modal-toggle" />
          <div className="modal bg-white text-black" role="dialog">

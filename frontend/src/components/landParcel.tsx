@@ -74,7 +74,7 @@ const LandParcel = ({ id }: { id?: number }) => {
       getYieldInfo(id)
    }, [id])
    return (
-      <div className="w-[20rem] h-full text-black shadow-lg rounded-lg p-0 z-0 px-0 overflow-x-hidden">
+      <div className="w-full h-full text-black shadow-lg rounded-lg p-2 py-5 overflow-x-hidden custom-scroll">
          {/* <h2 className="text-2xl font-bold mb-4 text-center">Land Parcel Information</h2> */}
 
          {/* Owner and ID */}
@@ -84,7 +84,7 @@ const LandParcel = ({ id }: { id?: number }) => {
       </div> */}
 
          {/* Location */}
-         <div className="pb-4 mb-4 bg-gray-100 p-5">
+         <div className="w-full pb-4 mb-4 p-5 bg-gray-100 rounded-xl">
             <h3 className="text-md font-semibold mb-2 text-center">Location</h3>
             <div className='flex'>
 
@@ -107,7 +107,7 @@ const LandParcel = ({ id }: { id?: number }) => {
          </div>
 
          {/* Fertility and Climate */}
-         <div className="pb-4 mb-4 bg-gray-100 p-5">
+         <div className="pb-4 mb-4 bg-gray-100 p-5 rounded-xl">
             <h3 className="text-md font-semibold mb-2 text-center">Soil Conditions</h3>
 
             <div className='flex'>
@@ -130,7 +130,7 @@ const LandParcel = ({ id }: { id?: number }) => {
 
 
          {/* Weather */}
-         <div className="pb-4 mb-4 bg-gray-100 p-5">
+         <div className="pb-4 mb-4 bg-gray-100 p-5 rounded-xl">
             <h3 className="text-md font-semibold mb-2 text-center">Weather Conditions</h3>
 
             <div className='flex'>
@@ -172,7 +172,7 @@ const LandParcel = ({ id }: { id?: number }) => {
       </div> */}
 
          {/* Crop Data */}
-         {/* <div className="pb-4 mb-4 bg-gray-100 p-5">
+         {/* <div className="pb-4 mb-4 bg-gray-100 p-5 rounded-xl">
             <h3 className="text-md font-semibold mb-2 text-center">Crop Data</h3>
             <div className='flex'>
                <div className='px-4'>
@@ -201,7 +201,7 @@ const LandParcel = ({ id }: { id?: number }) => {
          </div> */}
 
          {/* Loans */}
-         {/* <div className="pb-4 mb-4 bg-gray-100 p-5">
+         {/* <div className="pb-4 mb-4 bg-gray-100 p-5 rounded-xl">
             <h3 className="text-md font-semibold mb-2 text-center">Loans & Mortgages</h3>
             <div className='flex'>
                <div className='px-4'>

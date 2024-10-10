@@ -12,7 +12,7 @@ const Rightpanel = () => {
    const toPolygon = (data: any) => {
       const newArray: any = [];
       // console.log(data)
-      data.map((l: any, index: number) =>{
+      data.map((l: any, index: number) => {
          const array: any = []
          l.latlngs.map((latlng: any, index: number) => {
             array.push([latlng.lat, latlng.lng])
@@ -25,9 +25,9 @@ const Rightpanel = () => {
       setPolygon(toPolygon(mapLayer))
    }, [mapLayer])
    return (
-      <div className="w-full h-full bg-green-400 flex flex-col p-5">
-         <div className="w-full h-full rounded-xl border border-black overflow-hidden relative flex">
-            <Map openfn={setOpen} mapLayer={mapLayer} setMapLayer={setMapLayer} toPolygon={toPolygon}/>
+      <div className="h-full flex flex-col p-5 flex-1 overflow-auto ">
+         <div className="h-full rounded-xl border border-black overflow-hidden relative flex items-center ">
+            <Map openfn={setOpen} mapLayer={mapLayer} setMapLayer={setMapLayer} toPolygon={toPolygon} />
             {open && <RegisterContainer polygon={polygon} />}
          </div>
          <Statistics />

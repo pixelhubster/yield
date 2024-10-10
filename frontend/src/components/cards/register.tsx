@@ -40,7 +40,7 @@ const RegisterContainer = ({ polygon }: { polygon: any }) => {
       }
    }
    return (
-      <div className='w-[30rem] rounded-md h-full bg-gray-800 relative overflow-hidden shadow'>
+      <div className='card w-[30rem] rounded-md h-[80%] relative bg-blue-300 overflow-hidden shadow'>
          <div className='w-full bg-green-00 flex justify-between items-center p-5 border-b-2 border-gray-400'>
             <div>
                <p className='text-sm'>new</p>

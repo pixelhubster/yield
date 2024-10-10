@@ -33,11 +33,7 @@ const Leftpanel = () => {
    }
    // get()
    return (
-      <div className="w-[20rem] xl:w-[25%] sm:w-[25rem] h-full bg-red-400 p-2 flex flex-col">
-
-         {/* <div className="w-full h-[15rem] bg-yellow-300 rounded-xl shrink-0 overflow-hidden shadow-lg">
-            <Image src={maize} alt='' className='w-full h-full' />
-         </div> */}
+      <div className="w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:hidden">
          <div className='card w-full pb-0 h-[20rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
             <p>200</p>
             <p className='text-sm text-gray-300'>Total Supply</p>
@@ -48,18 +44,13 @@ const Leftpanel = () => {
                <BuyYieldModal />
             </div>
          </div>
-         {/* <div className="mb-4 m-3 flex flex-col items-center">
-            <div>0x5444....334 <button><FaRegCopy /></button></div>
-         </div> */}
-         {/* <RegisterCrop /> */}
-
          <div className='w-full h-full max-h-full bg-white mt-8 pt-8 rounded-xl px-5 shrink overflow-hidden'>
             <div className="w-full h-[3.5rem] rounded-full flex justify-center items-center bg-black p-[6px]">
                <button type="button" className={`w-1/2 h-full ${!tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(false)}>Properties</button>
                <button type="button" className={`w-1/2 h-full ${tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(true)}>History</button>
             </div>
 
-            <div className='w-[20rem] h-[80%] flex shrink overflow-auto mt-8 rounded-xl'>
+            <div className='w-full h-[80%] overflow-auto mt-8'>
                {!tab ?
                   <LandParcel id={search as number} />
                   : ""

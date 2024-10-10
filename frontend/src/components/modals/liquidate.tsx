@@ -4,7 +4,7 @@ import InputWithLabel from '../cards/inputWithLabel'
 const LiquidateModal = () => {
    return (
       <>
-         <label htmlFor="my_modal_12" className="btn bg-transparent border-0 text-white border-gray-100 hover:bg-transparent">Liquidate</label>
+         <label htmlFor="my_modal_12" className="bg-transparent border-0 text-black hover:bg-transparent shadow-0 ">Liquidate</label>
 
          <input type="checkbox" id="my_modal_12" className="modal-toggle" />
          <div className="modal bg-white text-black" role="dialog">
