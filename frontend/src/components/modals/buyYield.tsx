@@ -1,5 +1,6 @@
 import React from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
+import CustomButton from '../cards/button'
 
 const BuyYieldModal = () => {
    return (
@@ -43,17 +44,12 @@ const BuyYieldModal = () => {
                         <a href="#slide1" className="btn btn-circle bg-white/30 border-0 backdrop">❯</a>
                      </div>
                   </div>
-                  {/* <div id="slide4" className="carousel-item relative w-full">
-                     <div className='card w-full h-[12rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
-                        <p>25 eth</p>
-                        <p className='text-sm text-gray-300'>$2.3 per share</p>
-                     </div>
-                     </div> */}
                </div>
                <InputWithLabel name='Id' placeholder='Token Id' />
                <InputWithLabel name='Qty' placeholder='Token Quantity' />
                <InputWithLabel name='Pay $' placeholder='' />
-               <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Buy</button>
+               {/* <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Buy</button> */}
+               <CustomButton btn='Buy' />
                <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
             </div>
             <label className="modal-backdrop" htmlFor="my_modal_9">Close</label>

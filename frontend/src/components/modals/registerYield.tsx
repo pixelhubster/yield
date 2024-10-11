@@ -1,5 +1,6 @@
 import React from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
+import CustomButton from '../cards/button'
 
 const RegisterYieldModal = () => {
    return (
@@ -20,7 +21,8 @@ const RegisterYieldModal = () => {
                <InputWithLabel name='Season' placeholder='months to harvest ' />
                <InputWithLabel name='Total Yield' placeholder='e.g amount of expected yield ' />
                <InputWithLabel name='Mint Amount' placeholder='e.g Total yield token minted' />
-               <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Register</button>
+               {/* <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Register</button> */}
+               <CustomButton btn='Register'/>
                <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
             </div>
             <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
