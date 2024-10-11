@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import RegisterContainer from './cards/register'
 import Statistics from './statistics'
 const Map = dynamic(() => import("./map"), { ssr: false })
 
