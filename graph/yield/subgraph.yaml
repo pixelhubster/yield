@@ -1,0 +1,62 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: LandToken
+    network: base-sepolia
+    source:
+      address: "0xF5F7D334B1Dc75C644816BEA608B0af31f6450dc"
+      abi: LandToken
+      startBlock: 16418265
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - BatchMetadataUpdate
+        - LandDailyReport
+        - MetadataUpdate
+        - OwnershipTransferRequested
+        - OwnershipTransferred
+        - Registered
+        - RemovedToken
+        - RequestFulfilled
+        - RequestSent
+        - Transfer
+        - UpdateSuccessfull
+      abis:
+        - name: LandToken
+          file: ./abis/LandToken.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: BatchMetadataUpdate(uint256,uint256)
+          handler: handleBatchMetadataUpdate
+        - event: LandDailyReport(uint256,bytes32)
+          handler: handleLandDailyReport
+        - event: MetadataUpdate(uint256)
+          handler: handleMetadataUpdate
+        - event: OwnershipTransferRequested(indexed address,indexed address)
+          handler: handleOwnershipTransferRequested
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Registered(indexed address,indexed uint256,string,string)
+          handler: handleRegistered
+        - event: RemovedToken(uint256)
+          handler: handleRemovedToken
+        - event: RequestFulfilled(indexed bytes32)
+          handler: handleRequestFulfilled
+        - event: RequestSent(indexed bytes32)
+          handler: handleRequestSent
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: UpdateSuccessfull(string,uint256)
+          handler: handleUpdateSuccessfull
+      file: ./src/land-token.ts
