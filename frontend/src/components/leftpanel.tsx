@@ -38,7 +38,7 @@ const Leftpanel = () => {
             <p>200</p>
             <p className='text-sm text-gray-300'>Total Supply</p>
             <p className='font-bold text-sm text-white'>nyuiela.base.eth</p>
-            <div className='w-full flex justify-center gap-2 pt-8 bottom-5'>
+            <div className='w-full flex justify-center gap-2 pt-8 bottom-5 flex-shrink px-3'>
                <RegisterYieldModal />
                <ListYield />
                <BuyYieldModal />

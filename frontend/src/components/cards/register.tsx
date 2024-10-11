@@ -16,7 +16,7 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
-      if (account.status === "disconnected") toast.error("Wallet not connected")
+      if (account.status === "disconnected") return toast.error("Wallet not connected")
       try {
          const res = await fetch("/api/register", {
             method: "POST",
@@ -33,11 +33,16 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
          if (res.ok) {
             const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
             console.log(tokenId)
+            return { success: true, message: "Registered Land Successfully"}
+            // toast.success("Registered Land Succesfully!")
+         } else {
+            return { error: "Failed to post data"}
+            // toast.error("Failed to post data")
          }
-         toast.success("Registered Land Succesfully!")
       } catch (error) {
          console.log(error)
-         toast.error("Failed to register land - try again")
+         return { error: "Failed to register Land - try again"}
+         // toast.error("Failed to register land - try again")
       }
    }
    return (

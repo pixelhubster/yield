@@ -30,7 +30,7 @@ const Statistics = () => {
             </div>
             {/* <button className="w-[96%] flex justify-center items-center shrink m-2 mx-5 bg-blue-600 p-4 rounded-xl shadow-xl">invest</button> */}
             <BorrowModal />
-            {/* <RepayModal /> */}
+            <RepayModal />
          </div>
       </div>
    )

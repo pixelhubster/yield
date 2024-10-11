@@ -1,11 +1,32 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import CustomButton from '../cards/button'
+import { useAccount } from 'wagmi'
+import { yieldTokenContract } from '@/backend/web3'
 
 const BuyYieldModal = () => {
+   const account = useAccount()
+   const [value, setValue] = useState({
+      tokenId: 0,
+      listId: 0,
+      qty: 0,
+      amount: 0,
+   })
+   const handleChange = (e: any) => {
+      setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
+   }
+   const handleClick = async () => {
+      try {
+         const res = await yieldTokenContract.methods.buyShare(value.listId, value.tokenId, value.qty).send({ from: account.address});
+         return { success: true, message: "Yield Token Bought Successfully"}
+      } catch (error) {
+         return { error: "Failed to Buy Yield Token", contractError: error}
+      }
+   }
    return (
       <>
-         <label htmlFor="my_modal_9" className="btn bg-white text-black border-gray-100 hover:bg-gray-100">Purchase</label>
+         <label htmlFor="my_modal_9" className="btn bg-white text-black border-gray-100 hover:bg-gray-100 flex-1">Purchase</label>
 
          <input type="checkbox" id="my_modal_9" className="modal-toggle" />
          <div className="modal bg-white text-black" role="dialog">
@@ -45,11 +66,11 @@ const BuyYieldModal = () => {
                      </div>
                   </div>
                </div>
-               <InputWithLabel name='Id' placeholder='Token Id' />
-               <InputWithLabel name='Qty' placeholder='Token Quantity' />
-               <InputWithLabel name='Pay $' placeholder='' />
+               <InputWithLabel onChange={handleChange} value='tokenId' name='Id' placeholder='Token Id' />
+               <InputWithLabel onChange={handleChange} value='qty' name='Qty' placeholder='Token Quantity' />
+               <InputWithLabel onChange={handleChange} value='amount' name='Pay $' placeholder='' />
                {/* <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Buy</button> */}
-               <CustomButton btn='Buy' />
+               <CustomButton btn='Buy' handleClick={handleClick}/>
                <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
             </div>
             <label className="modal-backdrop" htmlFor="my_modal_9">Close</label>

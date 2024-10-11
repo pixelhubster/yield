@@ -1,11 +1,20 @@
 "use client"
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useAccount } from 'wagmi'
 
 const CustomButton = ({btn, handleClick}: {btn?: string, handleClick?: Function}) => {
    const [loading, setLoading] = useState(false)
+   const accounts = useAccount()
    const click = async () => {
+      if (accounts.isDisconnected) return toast.error("Wallet not connected")
       setLoading(true)
-      if (handleClick) await handleClick()
+      if (handleClick) {
+         const res = await handleClick()
+         console.log(res)
+         res.error && res.error.length > 0 && toast.error(res.error)
+         res.sucess && toast.error(res.message)
+      }
       setLoading(false)
    }
    return (
