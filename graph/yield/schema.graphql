@@ -115,3 +115,108 @@ type UpdateSuccessfull @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+type BurnYield @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  yieldId: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SharePurchased @entity(immutable: true) {
+  id: Bytes!
+  listId: BigInt! # uint256
+  yieldId: BigInt! # uint256
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferBatch @entity(immutable: true) {
+  id: Bytes!
+  operator: Bytes! # address
+  from: Bytes! # address
+  to: Bytes! # address
+  ids: [BigInt!]! # uint256[]
+  values: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferSingle @entity(immutable: true) {
+  id: Bytes!
+  operator: Bytes! # address
+  from: Bytes! # address
+  to: Bytes! # address
+  YieldToken_id: BigInt! # uint256
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type URI @entity(immutable: true) {
+  id: Bytes!
+  value: String! # string
+  YieldToken_id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type YieldListed @entity(immutable: true) {
+  id: Bytes!
+  listId: BigInt! # uint256
+  yieldId: BigInt! # uint256
+  amount: BigInt! # uint256
+  pricePerShare: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type YieldMinted @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  yieldId: BigInt! # uint256
+  landTokenId: BigInt! # uint256
+  yieldType: String! # string
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type LoanLiquidated @entity(immutable: true) {
+  id: Bytes!
+  yieldId: BigInt! # uint256
+  borrower: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LoanRepayed @entity(immutable: true) {
+  id: Bytes!
+  yieldId: BigInt! # uint256
+  borrower: Bytes! # address
+  yieldAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type YieldLoaned @entity(immutable: true) {
+  id: Bytes!
+  yieldId: BigInt! # uint256
+  borrower: Bytes! # address
+  yieldAmount: BigInt! # uint256
+  loanAmount: BigInt! # uint256
+  liquidationThreshold: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
