@@ -1,29 +1,42 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FeatureGroup, MapContainer, Marker, Polygon, Popup, TileLayer } from 'react-leaflet'
 import "leaflet/dist/leaflet.css"
-import L, { circle } from "leaflet"
+import L, { circle, polygon } from "leaflet"
 import { EditControl } from 'react-leaflet-draw'
 import { LatLngExpression } from 'leaflet'
 import "leaflet-draw/dist/leaflet.draw.css"
 import RegisterContainer from './cards/register'
+import { gql, request } from 'graphql-request'
+import queryContract from '@/app/context/query'
 
 const center: LatLngExpression = [51.5680403, -0.0509105]
 const purpleOptions = { color: 'green' }
-const multiPolygon: LatLngExpression[][] = [
-   [
-      [51.56804038777301, -0.05091057373268316],
-      [51.571776185471094, -0.04807836076754946],
-      [51.56738659161304, -0.04428062065522154],
-      [51.56709304742174, -0.04428062065522154],
-      [51.566172373800846, -0.048207097720507366]
-   ]
-]
+// const multiPolygon: LatLngExpression[][] = [
+//    [
+//       [51.56804038777301, -0.05091057373268316],
+//       [51.571776185471094, -0.04807836076754946],
+//       [51.56738659161304, -0.04428062065522154],
+//       [51.56709304742174, -0.04428062065522154],
+//       [51.566172373800846, -0.048207097720507366]
+//    ]
+// ]
+
 const Map = () => {
    const [mapLayer, setMapLayer] = useState<any>([])
    const [open, setOpen] = useState(false)
-   // const [polygon, setPolygon] = useState<any>()
-
+   const [polygons, setPolygons] = useState<any>([])
+   const url = "https://api.studio.thegraph.com/query/87675/yield/version/latest"
+   const query = gql`{
+      registereds {
+      id
+      owner
+      tokenURI
+      tokenId
+      coordinates
+      transactionHash
+      }
+    }`
    const toPolygon = (data: any) => {
       const newArray: any = [];
       data.map((l: any, index: number) => {
@@ -35,13 +48,34 @@ const Map = () => {
       });
       return newArray
    }
-   // useEffect(() => {
-   //    setPolygon(toPolygon(mapLayer))
-   // }, [mapLayer])
+
+   const getCoordinates = useCallback(async () => {
+      try {
+         const res: any = await queryContract(query);
+         const newList: LatLngExpression[] = []
+         const newCords = res.data.registereds.map((element: any) => {
+            const newData = element.coordinates.split(",")
+            const transformedData =
+               newData.reduce((acc: any, value: any, index: any, array: any) => {
+                  if (index % 2 === 0) {
+                     acc.push([parseFloat(array[index]), parseFloat(array[index + 1])]);
+                  }
+                  return acc;
+               }, []);
+               newList.push(transformedData)
+            console.log(transformedData)
+         }
+         );
+         setPolygons(newList);
+      } catch (error) {
+         console.error("Error fetching coordinates:", error);
+      }
+   }, [query]);
    useEffect(() => {
+      getCoordinates();
       if (mapLayer.length !== 0) setOpen(true)
       else setOpen(false)
-   }, [mapLayer, setOpen])
+   }, [mapLayer, setOpen, query, getCoordinates])
    toPolygon(mapLayer)
    const onCreate = (e: any) => {
       console.log(e)
@@ -88,12 +122,12 @@ const Map = () => {
                zIndex={10}
             // url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
+            <Polygon pathOptions={purpleOptions} positions={polygons} />
          </MapContainer>
-         {open && 
-         <div className='w-[30rem] h-[90%] absolute bg-white z-[30] rounded-xl drop-shadow-xl right-5'>
-            <RegisterContainer polygon={toPolygon(mapLayer)} setOpen={setOpen}/>
-         </div>
+         {open &&
+            <div className='w-[30rem] h-[90%] absolute bg-white z-[30] rounded-xl drop-shadow-xl right-5'>
+               <RegisterContainer polygon={toPolygon(mapLayer)} setOpen={setOpen} />
+            </div>
          }
       </>
    )

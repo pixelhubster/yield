@@ -2,10 +2,10 @@
 import React, { useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import CustomButton from '../cards/button'
-import { yieldLendingContract } from '@/backend/web3'
+import { usdcContract, yieldLendingContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 
-const RepayModal = () => {
+const RepayModal = ({id}: {id?: number}) => {
    const account = useAccount()
    const [value, setValue] = useState({
       tokenId: 0,
@@ -17,10 +17,14 @@ const RepayModal = () => {
    }
    const handleClick = async () => {
       try {
-         const res = await yieldLendingContract.methods.repay(value.tokenId).send({ from: account.address, value: value.amount});
+         const usdcRes = await usdcContract.methods.approve(process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT, 1).send({ from: account.address });
+         //  web3.utils.toWei('10', 'mwei'))
+            console.log(usdcRes)
+         const res = await yieldLendingContract.methods.repay(id).send({ from: account.address});
          console.log(res)
          return { success: true, message: "Loan Repaid Successfully"}
       } catch (error) {
+         console.log(error)
          return { error: "Failed to repay Loan - try again", contractError: error}
       }
    }
@@ -31,7 +35,7 @@ const RepayModal = () => {
          <div className="modal bg-white text-black" role="dialog">
             <div className="modal-box bg-white pt-2">
                <h3 className="text-lg font-bold text-center py-4">Repay Loan</h3>
-               <InputWithLabel value='tokenId' onChange={handleChange} name='Id' placeholder='Token Id' />
+               <InputWithLabel value='tokenId' onChange={handleChange} name='Id' placeholder='Token Id' fill={id}/>
                <InputWithLabel value='qty' onChange={handleChange} name='Token Supplied' placeholder='Qty' />
                <InputWithLabel value='amount' onChange={handleChange} name='Amount To Pay' placeholder='Amount to pay' />
                {/* <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Repay</button> */}

@@ -5,7 +5,7 @@ import CustomButton from '../cards/button'
 import { yieldTokenContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 
-const ListYield = () => {
+const ListYield = ({id}: {id?: number}) => {
    const account = useAccount()
    const [value, setValue] = useState({
       tokenId: 0,
@@ -31,7 +31,7 @@ const ListYield = () => {
          <div className="modal bg-white text-black" role="dialog">
             <div className="modal-box bg-white pt-2">
                <h3 className="text-lg font-bold text-center py-4">List Yield Token</h3>
-               <InputWithLabel value='tokenId' name='Id' placeholder='Token Id' onChange={handleChange} />
+               <InputWithLabel value='tokenId' name='Id' placeholder='Token Id' onChange={handleChange} fill={id}/>
                <InputWithLabel value='qty' name='Qty' placeholder='Token Quantity' onChange={handleChange} />
                <InputWithLabel value='pricePerShare' name='$' placeholder='Price per share' onChange={handleChange}/>
                {/* <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Complete</button> */}

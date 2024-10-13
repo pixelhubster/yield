@@ -32,17 +32,13 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
          // console.log(data)
          if (res.ok) {
             const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
-            console.log(tokenId)
             return { success: true, message: "Registered Land Successfully"}
-            // toast.success("Registered Land Succesfully!")
          } else {
             return { error: "Failed to post data"}
-            // toast.error("Failed to post data")
          }
       } catch (error) {
          console.log(error)
          return { error: "Failed to register Land - try again"}
-         // toast.error("Failed to register land - try again")
       }
    }
    return (

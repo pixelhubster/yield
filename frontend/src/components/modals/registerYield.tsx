@@ -5,6 +5,7 @@ import CustomButton from '../cards/button'
 import { useAccount } from 'wagmi'
 import toast from 'react-hot-toast'
 import { yieldTokenContract } from '@/backend/web3'
+import { isAllValuesFilled } from '@/app/context/query'
 
 const RegisterYieldModal = () => {
    const account = useAccount()
@@ -19,6 +20,7 @@ const RegisterYieldModal = () => {
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
+      if (!isAllValuesFilled(value)) return { error: "Some fields are empty"}
       try {
          const res = await yieldTokenContract.methods.mintYield(value.tokenId, value.yieldType, value.season,value.totalYield, value.amount).send({ from: account.address});
          console.log(res)

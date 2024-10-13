@@ -98,9 +98,9 @@ const LandParcel = ({ id }: { id?: number }) => {
                   <p><span className="font-semibold">Land Deed:</span> {parcel.ipfsdata.landDeedNumber}</p>
                   <p><span className="font-semibold">Created At:</span> {parcel.ipfsdata.created_at}</p>
                   <p><span className="font-semibold">Coordinates:</span> {parcel.ipfsdata.coordinates}</p>
-                  <p><span className="font-semibold">Latitude:</span> {parcel.ipfsdata.center[0]} </p>
-                  <p><span className="font-semibold">Longitude:</span>  {parcel.ipfsdata.center[1]}</p>
-                  <p><span className="font-semibold">Size in Acres:</span>  {parcel.ipfsdata.area}</p>
+                  <p><span className="font-semibold">Latitude:</span> {parcel.ipfsdata.center && parcel?.ipfsdata?.center[0]} </p>
+                  <p><span className="font-semibold">Longitude:</span>  {parcel.ipfsdata.center && parcel?.ipfsdata?.center[1]}</p>
+                  <p><span className="font-semibold">Size in Acres:</span>  {parcel?.ipfsdata?.area ||0}</p>
 
                </div>
             </div>

@@ -52,3 +52,40 @@ body {
 .custom-scroll {
    -ms-overflow-style: none;   /* IE and Edge */
 }
+
+input:has(> input[disabled]),
+  .input-disabled,
+  .input:disabled,
+  .input[disabled] {
+   cursor: not-allowed;
+   --tw-border-opacity: 1;
+   border-color: white;
+   --tw-bg-opacity: 1;
+   background-color:white;
+   color: black;
+}
+.input:has(> input[disabled])::placeholder,
+  .input-disabled::placeholder,
+  .input:disabled::placeholder,
+  .input[disabled]::placeholder {
+   color: black;
+   --tw-placeholder-opacity: 0.2;
+}
+/* input:has(> input[disabled]),
+  .input-disabled,
+  .input:disabled,
+  .input[disabled] {
+   cursor: not-allowed;
+   --tw-border-opacity: 1;
+   border-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-border-opacity)));
+   --tw-bg-opacity: 1;
+   background-color: var(--fallback-b2,oklch(var(--b2)/var(--tw-bg-opacity)));
+   color: var(--fallback-bc,oklch(var(--bc)/0.4));
+}
+.input:has(> input[disabled])::placeholder,
+  .input-disabled::placeholder,
+  .input:disabled::placeholder,
+  .input[disabled]::placeholder {
+   color: var(--fallback-bc,oklch(var(--bc)/var(--tw-placeholder-opacity)));
+   --tw-placeholder-opacity: 0.2;
+} */

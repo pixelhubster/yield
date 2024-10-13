@@ -10,7 +10,7 @@ import { IERC20 } from "@openzeppelin/contracts/interfaces/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { AggregatorV3Interface } from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
-contract YieldLending is IERC1155Receiver, OwnerIsCreator, ReentrancyGuard {
+contract YieldLending is IERC1155Receiver, OwnerIsCreator {
     using SafeERC20 for IERC20;
 
     struct LoanDetails {
@@ -63,13 +63,23 @@ contract YieldLending is IERC1155Receiver, OwnerIsCreator, ReentrancyGuard {
         i_ltvLiquidationThreshold = 75; // 75% liquidation LTV
     }
 
+    receive() external payable {}
+   function withdraw(uint256 amount) external onlyOwner {
+        require(amount > 0, "Amount must be greater than zero");
+        uint256 contractBalance = IERC20(i_usdc).balanceOf(address(this));
+        require(amount <= contractBalance, "Insufficient USDC balance");
+
+        bool success = IERC20(i_usdc).transfer(owner(), amount);
+        require(success, "USDC transfer failed");
+    }
+
     function borrow(
         uint256 yieldId,
         uint256 yieldAmount, // Fraction of crop tokens to be collateralized
         bytes memory data,
         uint256 minLoanAmount,
         uint256 maxLiquidationThreshold
-    ) external nonReentrant {
+    ) external {
         if (s_activeLoans[yieldId][msg.sender].usdcAmountLoaned != 0) revert AlreadyBorrowed(msg.sender, yieldId);
 
         uint256 cropValuationInUsdc = getYieldValuationInUsdc(yieldId) * yieldAmount / i_yieldToken._totalSupply(yieldId);
@@ -94,7 +104,7 @@ contract YieldLending is IERC1155Receiver, OwnerIsCreator, ReentrancyGuard {
         emit YieldLoaned(yieldId, msg.sender, yieldAmount, loanAmount, liquidationThreshold);
     }
 
-    function repay(uint256 yieldId) external nonReentrant {
+    function repay(uint256 yieldId) external {
         LoanDetails memory loanDetails = s_activeLoans[yieldId][msg.sender];
         if (loanDetails.usdcAmountLoaned == 0) revert NothingToRepay();
 
@@ -154,7 +164,7 @@ contract YieldLending is IERC1155Receiver, OwnerIsCreator, ReentrancyGuard {
         uint256, /* id */
         uint256, /* value */
         bytes calldata /* data */
-    ) external nonReentrant returns (bytes4) {
+    ) external view returns (bytes4) {
         if (msg.sender != address(i_yieldToken)) {
             revert OnlyYieldTokenSupported();
         }
