@@ -9,8 +9,9 @@ import "leaflet-draw/dist/leaflet.draw.css"
 import RegisterContainer from './cards/register'
 import { gql, request } from 'graphql-request'
 import queryContract from '@/app/context/query'
+import { useSearchParams } from 'next/navigation'
 
-const center: LatLngExpression = [51.5680403, -0.0509105]
+// const center: LatLngExpression = [51.5680403, -0.0509105]
 const purpleOptions = { color: 'green' }
 // const multiPolygon: LatLngExpression[][] = [
 //    [
@@ -26,7 +27,8 @@ const Map = () => {
    const [mapLayer, setMapLayer] = useState<any>([])
    const [open, setOpen] = useState(false)
    const [polygons, setPolygons] = useState<any>([])
-   const url = "https://api.studio.thegraph.com/query/87675/yield/version/latest"
+   const search = useSearchParams()
+   const center: LatLngExpression = [Number(search.get("lat")), Number(search.get("lon"))]
    const query = gql`{
       registereds {
       id

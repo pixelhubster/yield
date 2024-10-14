@@ -12,10 +12,7 @@ import { getEnsAddress } from '@wagmi/core'
 
 const Navbar = () => {
    const [query, setQuery] = useState<string>('');
-   const [ens, setEns] = useState<string>('');
    const router = useRouter();
-   const searchParams = useSearchParams()
-   const [suggestions, setSuggestions] = useState<String[]>([]); // Holds suggestions
    const [filteredSuggestions, setFilteredSuggestions] = useState<String[]>([]); // Filtered suggestions for display
    const inputTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Ref for storing the timeout ID
 

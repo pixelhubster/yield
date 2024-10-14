@@ -34,7 +34,7 @@ const Leftpanel = () => {
       async function get() {
          const res = await queryContract(query);
          if (res.success) setData(res.data)
-            console.log(res.success)
+         console.log(res.data)
       }
       get()
    }, [searchParams])
@@ -59,7 +59,7 @@ const Leftpanel = () => {
          {/* flex bg-white z-[40] absolute top-0 shadow-md */}
          <div className='card w-full pb-0 h-[20rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
             <p className='flex gap-2 items-end'>{data?.yieldMinteds[0]?.amount || 0}
-            {/* <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0].yieldType}</p> */}
+               {/* <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0].yieldType}</p> */}
 
             </p>
             <p className='text-sm text-gray-300'>Total Supply</p>
@@ -67,8 +67,12 @@ const Leftpanel = () => {
             <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0]?.owner && shortenAddress(data?.yieldMinteds[0]?.owner)}</p>
             <div className='w-full flex justify-center gap-2 pt-8 bottom-5 flex-shrink px-3 z-[20]'>
                <RegisterYieldModal />
-               <ListYield id={data?.yieldMinteds[0]?.yieldId || 0}/>
-               <BuyYieldModal id={data?.yieldMinteds[0]?.yieldId || 0} />
+               {data?.yieldMinteds.length > 0 &&
+                  <>
+                     <ListYield id={data?.yieldMinteds[0]?.yieldId || 0} />
+                     <BuyYieldModal id={data?.yieldMinteds[0]?.yieldId || 0} />
+                  </>
+               }
             </div>
          </div>
          <div className='w-full h-full max-h-full bg-white mt-8 pt-8 rounded-xl px-5 shrink overflow-hidden'>

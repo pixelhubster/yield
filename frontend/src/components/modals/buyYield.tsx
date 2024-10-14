@@ -10,18 +10,9 @@ import Web3 from 'web3'
 
 const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
    const account = useAccount()
-   // const [value, setValue] = useState({
-   //    tokenId: 0,
-   //    listId: 0,
-   //    qty: 0,
-   //    amount: 0,
-   // })
    const [data, setData] = useState<any>()
    const [sold, setSold] = useState<any>()
    const [skey, setKey] = useState<any>(0)
-   // const handleChange = (e: any) => {
-   //    setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
-   // }
    let amountToPay = data?.yieldListeds[skey]?.pricePerShare * data?.yieldListeds[skey]?.amount
    const big = Web3.utils.toWei(BigInt(amountToPay || 0), "ether")
    const handleClick = async () => {
