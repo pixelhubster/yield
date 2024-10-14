@@ -59,20 +59,19 @@ const Statistics = ({id}: {id?: number}) => {
             <Summary header="Balance" data={data.balance || 0} className="text-white bg-green-400" />
          </div>
          <div className="flex flex-col gap-2">
-            <Summary header="Loan To value Ratio" data="60%" className="bg-black text-white" />
-            <Summary header="Liquidation Thresold" data="75%" className="bg-white text-black" />
+            <Summary header="LTV Ratio" data="60%" className="bg-black text-white" />
+            <Summary header="Liquidation" data="75%" className="bg-white text-black" />
          </div>
 
          <div className={`w-full h-full flex rounded-xl border border-black bg-white shadow-md flex-col justify-center items-center relative overflow-hidden pt-5 min-w-[13rem]`}>
+            {/* <div className="w-full h-full overflow-hidden flex">
+               <Mincard />
+               <Mincard />
+            </div> */}
             <div className="w-full h-full overflow-hidden flex">
                <Mincard />
                <Mincard />
             </div>
-            <div className="w-full h-full overflow-hidden flex">
-               <Mincard />
-               <Mincard />
-            </div>
-            {/* <button className="w-[96%] flex justify-center items-center shrink m-2 mx-5 bg-blue-600 p-4 rounded-xl shadow-xl">invest</button> */}
             <BorrowModal id={id}/>
             <RepayModal id={id} />
          </div>

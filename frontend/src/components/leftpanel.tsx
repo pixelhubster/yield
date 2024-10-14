@@ -11,7 +11,6 @@ import queryContract, { getName, shortenAddress } from '@/app/context/query';
 const Leftpanel = () => {
    const [tab, setTab] = useState<boolean>(false)
    const searchParams = useSearchParams()
-   const [search, setSearch] = useState<string | number | null>(searchParams.get("search"))
    const [data, setData] = useState<any>()
    // console.log(searchParams.get("search"))
    // const getUnixTimestamp = () => {
@@ -39,7 +38,7 @@ const Leftpanel = () => {
       }
       get()
    }, [searchParams])
-   console.log(data)
+   // console.log(data)
    // const get = async () => {
    //    const date = getUnixTimestamp()
    //    const polygon = "670041676419591af8d66659";
@@ -56,7 +55,8 @@ const Leftpanel = () => {
    // }
    // get()
    return (
-      <div className="w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:hidden">
+      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:hidden`}>
+         {/* flex bg-white z-[40] absolute top-0 shadow-md */}
          <div className='card w-full pb-0 h-[20rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
             <p className='flex gap-2 items-end'>{data?.yieldMinteds[0]?.amount || 0}
             {/* <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0].yieldType}</p> */}
