@@ -6,9 +6,11 @@ import { landContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 import toast from 'react-hot-toast'
 import CustomButton from './button'
+import { useRouter } from 'next/navigation'
 
 const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Function }) => {
    const account = useAccount()
+   const router = useRouter()
    const [value, setValue] = useState({
       ownershipType: "private"
    })
@@ -32,6 +34,9 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
          // console.log(data)
          if (res.ok) {
             const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
+            // router.refresh()
+            // const search = new URLSearchParams()
+            // search.set("search", tokenId)
             return { success: true, message: "Registered Land Successfully"}
          } else {
             return { error: "Failed to post data"}

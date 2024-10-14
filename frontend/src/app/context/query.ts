@@ -40,3 +40,90 @@ const isAllValuesFilled = (obj: Object) => {
  }
  
  export {isAllValuesFilled, shortenAddress, getName}
+
+
+//  {
+//    yieldMinteds {
+//      amount
+//      blockNumber
+//      blockTimestamp
+//      id
+//      landTokenId
+//      owner
+//      transactionHash
+//      yieldId
+//      yieldType
+//    }
+//    yieldLoaneds {
+//      blockNumber
+//      blockTimestamp
+//      borrower
+//      id
+//      liquidationThreshold
+//      loanAmount
+//      transactionHash
+//      yieldAmount
+//      yieldId
+//    }
+//    yieldListeds {
+//      yieldId
+//      transactionHash
+//      pricePerShare
+//      listId
+//      id
+//      blockTimestamp
+//      blockNumber
+//      amount
+//    }
+//    updateSuccessfulls {
+//      blockNumber
+//      blockTimestamp
+//      date
+//      hash
+//      id
+//      transactionHash
+//    }
+//    sharePurchaseds {
+//      amount
+//      blockNumber
+//      blockTimestamp
+//      id
+//      listId
+//      transactionHash
+//      yieldId
+//    }
+//    loanRepayeds {
+//      blockNumber
+//      blockTimestamp
+//      borrower
+//      id
+//      transactionHash
+//      yieldAmount
+//      yieldId
+//    }
+//    loanLiquidateds {
+//      blockNumber
+//      blockTimestamp
+//      borrower
+//      id
+//      transactionHash
+//      yieldId
+//    }
+//    landDailyReports {
+//      blockNumber
+//      blockTimestamp
+//      date
+//      id
+//      requestId
+//      transactionHash
+//    }
+//    burnYields {
+//      amount
+//      blockNumber
+//      blockTimestamp
+//      id
+//      transactionHash
+//      owner
+//      yieldId
+//    }
+//  }

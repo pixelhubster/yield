@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import { yieldTokenContract } from '@/backend/web3'
 import { isAllValuesFilled } from '@/app/context/query'
 
-const RegisterYieldModal = () => {
+const RegisterYieldModal = ({id}: {id?: number}) => {
    const account = useAccount()
    const [value, setValue] = useState({
       tokenId: 0,
@@ -37,7 +37,7 @@ const RegisterYieldModal = () => {
          <div className="modal bg-white text-black" role="dialog">
             <div className="modal-box bg-white pt-2">
                <h3 className="text-lg font-bold text-center py-4">Register Yield</h3>
-               <InputWithLabel value='tokenId' name='Token Id' placeholder='Token Id' onChange={handleChange} />
+               <InputWithLabel value='tokenId' name='Token Id' placeholder='Token Id' onChange={handleChange} fill={id} />
                <InputWithLabel value='yieldType' name='Yield Type' placeholder='e.g crop, maize' onChange={handleChange}/>
                <InputWithLabel value='season' name='Season' placeholder='months to harvest ' onChange={handleChange}/>
                <InputWithLabel value='totalYield' name='Total Yield' placeholder='e.g amount of expected yield ' onChange={handleChange}/>

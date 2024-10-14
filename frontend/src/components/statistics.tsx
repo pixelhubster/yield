@@ -56,11 +56,11 @@ const Statistics = ({id}: {id?: number}) => {
          <Summary header="Expected Total Yield" data={data.totalYield || 0} className="bg-white text-black shrink-0" />
          <div className="flex flex-col gap-2">
             <Summary header="Season" data={data.season || 0} className="bg-black text-white" />
-            <Summary header="Balance" data={data.balance || 0} className="text-white bg-green-400" />
+            <Summary header="Balance" data={data.balance || 0} className="text-black" />
          </div>
          <div className="flex flex-col gap-2">
-            <Summary header="LTV Ratio" data="60%" className="bg-black text-white" />
-            <Summary header="Liquidation" data="75%" className="bg-white text-black" />
+            <Summary header="LTV Ratio" data={60} unit='%' className="bg-black text-white" />
+            <Summary header="Liquidation" data={75} unit='%' className="bg-white text-black" />
          </div>
 
          <div className={`w-full h-full flex rounded-xl border border-black bg-white shadow-md flex-col justify-center items-center relative overflow-hidden pt-5 min-w-[13rem]`}>

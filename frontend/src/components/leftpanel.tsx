@@ -7,6 +7,7 @@ import ListYield from './modals/listYield';
 import BuyYieldModal from './modals/buyYield';
 import { gql } from 'graphql-request';
 import queryContract, { getName, shortenAddress } from '@/app/context/query';
+import History from './history';
 
 const Leftpanel = () => {
    const [tab, setTab] = useState<boolean>(false)
@@ -34,7 +35,6 @@ const Leftpanel = () => {
       async function get() {
          const res = await queryContract(query);
          if (res.success) setData(res.data)
-         console.log(res.data)
       }
       get()
    }, [searchParams])
@@ -66,7 +66,7 @@ const Leftpanel = () => {
             {/* <p className='font-bold text-sm text-white'>{getName(data?.yieldMinteds[0].owner)}</p> */}
             <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0]?.owner && shortenAddress(data?.yieldMinteds[0]?.owner)}</p>
             <div className='w-full flex justify-center gap-2 pt-8 bottom-5 flex-shrink px-3 z-[20]'>
-               <RegisterYieldModal />
+               <RegisterYieldModal id={data?.yieldMinteds[0]?.yieldId}/>
                {data?.yieldMinteds.length > 0 &&
                   <>
                      <ListYield id={data?.yieldMinteds[0]?.yieldId || 0} />
@@ -84,7 +84,7 @@ const Leftpanel = () => {
             <div className='w-full h-[80%] overflow-auto mt-8'>
                {!tab ?
                   <LandParcel id={Number(searchParams.get("search"))} />
-                  : ""
+                  : <History />
                }
 
             </div>

@@ -65,7 +65,6 @@ const Map = () => {
                   return acc;
                }, []);
                newList.push(transformedData)
-            console.log(transformedData)
          }
          );
          setPolygons(newList);

@@ -59,14 +59,14 @@ const Navbar = () => {
             <TiThMenuOutline fontSize={25} className='hover:cursor-pointer' />
             <a href="" rel="noopener noreferrer">Yield</a>
          </div>
-         <form action='' method='' onSubmit={handleSearch} className="w-[50vw] lg:w-[40vw] h-[2.5rem] rounded-md bg-gray-00 flex  border border-gray-00 focus:border-gray-00 relative z-[40] max-sm:hidden
+         <form action='' method='' onSubmit={handleSearch} className="w-[50vw] lg:w-[40vw] h-[2.5rem] rounded-md bg-gray-00 flex  border border-gray-00 focus:border-gray-00 relative max-sm:hidden
    ">
 
             <input type="search" name="ens" id="" className="w-full h-full px-2 outline-none text-black focus-within:text-black bg-white peer/active" autoComplete='off' placeholder="land id" value={query} onChange={handleInputChange} />
             <button className="h-full w-fit bg-white hover:bg-gray-300 px-3" type='submit'>
                <FaSearch fontSize={16} className="hover:cursor-pointer" />
             </button>
-            <Suspense fallback={<div className="skeleton h-32 w-32"></div>}>
+            {/* <Suspense fallback={<div className="skeleton h-32 w-32"></div>}>
                {filteredSuggestions.length > 0 &&
                   <ul className="absolute top-[2.1rem] left-0 z-[40] bg-white border border-gray-300 mt-1 w-[50vw] lg:w-[40vw] border-t-0 max-h-60 overflow-y-auto custom-scroll peer-focus-within/active:block  hidden text-sm text-gray-600 ">
                      {filteredSuggestions.map((suggestion, index) => (
@@ -80,7 +80,7 @@ const Navbar = () => {
                      ))}
                   </ul>
                }
-            </Suspense>
+            </Suspense> */}
          </form>
          <div className="flex gap-5 items-center">
             <LiquidateModal />

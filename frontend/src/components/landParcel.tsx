@@ -70,7 +70,6 @@ const LandParcel = ({ id }: { id?: number }) => {
    const getYieldInfo = async (id?: number) => {
       const res = await fetch(`/api/register?id=${id}`);
       const data = await res.json()
-      // console.log(data)
       if (!data.error) setParcel({ ...data, data: {}, ...data.data[id ?? 0] })
    }
    useCallback(() => {
@@ -82,7 +81,6 @@ const LandParcel = ({ id }: { id?: number }) => {
    useEffect(() => {
       getYieldInfo(id)
    }, [id])
-   console.log(parcel)
    return (
       <div className="w-full h-full text-black shadow-lg rounded-lg p-2 py-5 overflow-x-hidden custom-scroll">
          <div className="w-full pb-4 mb-4 p-5 bg-slate-300 shadow-sm rounded-xl">
