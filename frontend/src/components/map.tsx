@@ -71,11 +71,13 @@ const Map = () => {
          console.error("Error fetching coordinates:", error);
       }
    }, [query]);
+
    useEffect(() => {
       getCoordinates();
       if (mapLayer.length !== 0) setOpen(true)
       else setOpen(false)
    }, [mapLayer, setOpen, query, getCoordinates])
+   
    toPolygon(mapLayer)
    const onCreate = (e: any) => {
       console.log(e)
