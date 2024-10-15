@@ -29,6 +29,7 @@
     "web3": "^4.13.0"
   },
   "devDependencies": {
+    "@chainlink/env-enc": "^1.0.5",
     "@types/leaflet": "^1.9.12",
     "@types/node": "^20",
     "@types/react": "^18",

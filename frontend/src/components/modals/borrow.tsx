@@ -46,7 +46,7 @@ const BorrowModal = ({ id }: { id?: number }) => {
    }
    return (
       <>
-         <label htmlFor="my_modal_10" className="btn bg-[#150578]/90 hover:bg-[#150578] w-[95%] my-2 flex-1 shrink border-0 text-white">Borrow</label>
+         <label htmlFor="my_modal_10" className="btn bg-[#150578]/90 hover:bg-[#150578] w-[95%] my-1 border-0 text-white">Borrow</label>
 
          <input type="checkbox" id="my_modal_10" className="modal-toggle" />
          <div className="modal bg-white text-black" role="dialog">

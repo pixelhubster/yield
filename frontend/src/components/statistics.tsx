@@ -69,8 +69,8 @@ const Statistics = ({id}: {id?: number}) => {
                <Mincard />
             </div> */}
             <div className="w-full h-full overflow-hidden flex">
-               <Mincard />
-               <Mincard />
+               <Mincard name='Pool' value='0'/>
+               <Mincard name='Borrowed' value='0' />
             </div>
             <BorrowModal id={id}/>
             <RepayModal id={id} />
