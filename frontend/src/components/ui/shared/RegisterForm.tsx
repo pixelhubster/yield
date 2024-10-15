@@ -3,11 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 
-interface FarmingAndFormProps {
-  name: string;
-}
 
-export default function FarmingAndForm({ name }: FarmingAndFormProps) {
+
+export default function FarmingAndForm({ name }:{name:string}) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-4" name={name}>
       <div className="w-full max-w-6xl bg-white rounded-3xl shadow-lg overflow-hidden">

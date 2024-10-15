@@ -1,4 +1,6 @@
+"use client"
 import React from "react";
+import {useState} from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 // import Layout from "../../../components/Layout";
@@ -17,9 +19,17 @@ import {
 } from "lucide-react";
 import LandParcel from "@/components/LandParcel";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import BorrowModal from "@/components/modals/borrow";
+import RegisterYieldModal from "@/components/modals/registerYield";
+import ListYieldModal from "@/components/modals/listYield";
 // import Map from "@/components/Map";
 
 const DashMain = () => {
+
+    const [borrowModal ,setBorrowModal] = useState(false)
+    const [regYield ,setRegYield] = useState(false)
+    const [listYield ,setListYield] = useState(false)
+
   const mapUrl =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.3059445135!2d-74.25986790384692!3d40.69714941680757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1697414114610!5m2!1sen!2s";
   return (
@@ -39,6 +49,7 @@ const DashMain = () => {
                 <Button
                   variant="outline"
                   className="bg-white text-green-800 hover:bg-green-100 flex items-center justify-center"
+                  onClick={() => setRegYield(true)}
                 >
                   <Package className="w-4 h-4 mr-1" />
                   Register
@@ -46,6 +57,7 @@ const DashMain = () => {
                 <Button
                   variant="outline"
                   className="bg-white text-green-800 hover:bg-green-100 flex items-center justify-center"
+                  onClick={() => setListYield(true)}
                 >
                   <List className="w-4 h-4 mr-1" />
                   List
@@ -74,7 +86,7 @@ const DashMain = () => {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Google Map"
-              ></iframe>
+                ></iframe>
               {/* <Map/> */}
             </CardContent>
           </Card>
@@ -187,7 +199,7 @@ const DashMain = () => {
                 {/* Season card */}
                 <Card className="bg-secondary border-none border-[#c7cdce]  transition-colors">
                   <CardContent className="px-6">
-                    <Button className="w-full bg-green-800 text-white">
+                    <Button className="w-full bg-green-800 text-white" onClick={() => setBorrowModal(true)}>
                       Borrow
                     </Button>
                   </CardContent>
@@ -236,6 +248,10 @@ const DashMain = () => {
           </Card>
         </div>
       </div>
+      {/* modals */}
+      <BorrowModal setBorrowModal={setBorrowModal} borrowModal={borrowModal}/>
+      <RegisterYieldModal setRegYield={setRegYield} regYield={regYield} />
+      <ListYieldModal setListYield={setListYield} listYield={listYield} />
     </>
   );
 };

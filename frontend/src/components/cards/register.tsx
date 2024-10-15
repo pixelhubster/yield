@@ -49,23 +49,7 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
             </div>
             <IoMdClose fontSize={25} className='text-black cursor-pointer hover:bg-gray-50' onClick={() => setOpen(false)} />
          </div>
-         <div className='w-full h-full flex flex-col bg-yellow-00 p-5  px-6 overflow-auto custom-scroll'>
-            <TextInput label='land Name' placeholder="e.g Cherry's Farm" setValue={setValue} />
-            <TextInput label='land Deed Number' placeholder='e.g A299393' setValue={setValue} />
-            <TextInput label='owner Name' placeholder='e.g Noble Nyuiela' setValue={setValue} />
-            <label className="form-control w-full">
-               <div className="label">
-                  <span className="label-text">Onwership Type</span>
-               </div>
-               <select className="select select-bordered bg-white text-black focus-within:border-blue-300 focus-within:outline-none h-[2.7rem]" value={value.ownershipType} name="ownershipType" onChange={handleChange}>
-                  <option disabled value="">Ownership Type</option>
-                  <option value="private">Privately Owned</option>
-                  <option value="leased">Leased</option>
-                  <option value="shared">Shared</option>
-               </select>
-            </label>
-            <CustomButton btn='Register' handleClick={handleRegister}/>
-         </div>
+        
 
 
       </div>

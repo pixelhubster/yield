@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {Link} from "react-scroll"
+import { Link } from "react-scroll";
 import {
   ArrowRight,
   Leaf,
@@ -26,7 +26,6 @@ const images = [
 const ModernHeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,21 +42,32 @@ const ModernHeroSection = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-green-800 to-green-800">
+    <div
+      className="min-h-screen flex flex-col bg-gradient-to-r from-green-800 to-green-800"
+      name="startview"
+    >
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-10 bg-white-50/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Leaf className="h-8 w-8 text-green-600" />
           <div className="hidden md:flex space-x-6">
-            {["Home", "Register"].map((item) => (
+            <div className="flex gap-4">
               <Link
-                key={item}
-                to="registerform"
-                className="text-white hover:text-green-200 transition-colors"
+                // onClick={() => scrollToSection(startView)}
+                to="startview"
+                className="text-white hover:text-green-200 cursor-pointer transition-colors"
               >
-                {item}
+                Home
               </Link>
-            ))}
+              <Link
+                //  key={item}
+                // onClick={() => scrollToSection(regForm)}
+                to="registerform"
+                className="text-white hover:text-green-200 cursor-pointer transition-colors"
+              >
+                Register
+              </Link>
+            </div>
           </div>
           <Button variant="outline" className="md:hidden">
             <ArrowRight className="h-4 w-4" />
@@ -75,8 +85,8 @@ const ModernHeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Phytosphere
+            <h1 className="text-4xl md:text-5xl  font-bold text-white mb-6">
+              CRYPTOFARMING
             </h1>
             <p className="text-xl md:text-2xl text-green-200 mb-8">
               The highest quality plants for your garden and backyard. We
@@ -85,15 +95,9 @@ const ModernHeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-green-600 hover:bg-green-700 text-white">
-                Buy Now
-              </Button>
-              <Button
-                variant="outline"
-                className="text-green-600 border-green-600 hover:bg-green-50"
-              >
-                Learn More
-              </Button>
+              <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md transition-colors duration-300 font-medium text-lg shadow-md hover:shadow-lg">
+                Connect wallet
+              </button>
             </div>
           </motion.div>
 
@@ -144,7 +148,7 @@ const ModernHeroSection = () => {
 
       {/* About Section */}
       <AboutPage />
-      <FarmingAndForm name="registerform"/>
+      <FarmingAndForm name="registerform" />
 
       {/* Footer */}
       <footer className="bg-green-800 text-white py-8 mt-auto rounded-t-[4rem]">
