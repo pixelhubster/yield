@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 // import LandParcel from './landParcel'
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import RegisterYieldModal from './modals/registerYield';
 import ListYield from './modals/listYield';
 import BuyYieldModal from './modals/buyYield';
@@ -9,37 +9,45 @@ import { gql } from 'graphql-request';
 import queryContract, { getName, shortenAddress } from '@/app/context/query';
 import History from './history';
 import dynamic from 'next/dynamic';
+import { IoMdClose } from 'react-icons/io';
 
-const LandParcel = dynamic(() => import("./landParcel"), { ssr: true})
+const LandParcel = dynamic(() => import("./landParcel"), { ssr: true })
 const Leftpanel = () => {
    const [tab, setTab] = useState<boolean>(false)
    const searchParams = useSearchParams()
+   const search = new URLSearchParams(window.location.search);
    const [data, setData] = useState<any>()
+   const [sidebar, setSidebar] = useState<any>(false)
+   // const sidebar = searchParams.get("tab")
+   const router = useRouter()
    // console.log(searchParams.get("search"))
    // const getUnixTimestamp = () => {
    //    const timestamp = Math.floor(Date.now() / 1000); // Divides by 1000 to get seconds
    //    return timestamp;
    // };
+   const query = gql` {
+     yieldMinteds(where: {landTokenId: ${Number(search.get("search"))}}) {
+       id
+       yieldId
+       landTokenId
+       yieldType
+       owner
+       transactionHash
+       blockTimestamp
+       amount
+       blockNumber
+     }
+   }`
+
+
    useEffect(() => {
-      const query = gql` {
-        yieldMinteds(where: {landTokenId: ${Number(searchParams.get("search"))}}) {
-          id
-          yieldId
-          landTokenId
-          yieldType
-          owner
-          transactionHash
-          blockTimestamp
-          amount
-          blockNumber
-        }
-      }`
       async function get() {
          const res = await queryContract(query);
          if (res.success) setData(res.data)
       }
+      // setSidebar(search.get("tab"))
       get()
-   }, [searchParams])
+   }, [query])
    // console.log(data)
    // const get = async () => {
    //    const date = getUnixTimestamp()
@@ -57,8 +65,16 @@ const Leftpanel = () => {
    // }
    // get()
    return (
-      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:hidden`}>
-         {/* flex bg-white z-[40] absolute top-0 shadow-md */}
+      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:bg-white max-lg:z-[40] max-lg:absolute max-lg:top-0 max-lg:shadow-md
+      ${searchParams.get("tab") ? "max-lg:flex" : "max-lg:hidden"}
+      `}>
+         <div className='w-full h-[4rem] bg-red-00 mb-5 flex justify-end items-center lg:hidden'>
+            <IoMdClose fontSize={30} color='black' className='hover:bg-gray-200 rounded' onClick={() => {
+               setSidebar(false)
+               search.set("tab", String(false))
+               router.push(`?${search.toString()}`)
+            }} />
+         </div>
          <div className='card w-full pb-0 h-[20rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
             <p className='flex gap-2 items-end'>{data?.yieldMinteds[0]?.amount || 0}
                {/* <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0].yieldType}</p> */}
@@ -68,7 +84,7 @@ const Leftpanel = () => {
             {/* <p className='font-bold text-sm text-white'>{getName(data?.yieldMinteds[0].owner)}</p> */}
             <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0]?.owner && shortenAddress(data?.yieldMinteds[0]?.owner)}</p>
             <div className='w-full flex justify-center gap-2 pt-8 bottom-5 flex-shrink px-3 z-[20]'>
-               <RegisterYieldModal id={data?.yieldMinteds[0]?.yieldId}/>
+               <RegisterYieldModal id={data?.yieldMinteds[0]?.yieldId} />
                {data?.yieldMinteds.length > 0 &&
                   <>
                      <ListYield id={data?.yieldMinteds[0]?.yieldId || 0} />

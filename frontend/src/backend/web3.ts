@@ -18,7 +18,6 @@ const usdcAbi = [
    },
  ];
 let landContractAddress = process.env.NEXT_PUBLIC_LAND_CONTRACT || process.env.LAND_CONTRACT;
-let cropContractAddress = process.env.NEXT_PUBLIC_CROP_CONTRACT || process.env.CROP_CONTRACT;
 let yieldTokenContractAddress = process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT || process.env.YIELDTOKEN_CONTRACT;
 let yieldLendingContractAddress = process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT || process.env.YIELDLENDING_CONTRACT;
 let web3: any;

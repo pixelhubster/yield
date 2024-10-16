@@ -1,13 +1,13 @@
 "use client"
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-// const countUpModule = import('countup.js');
+import dynamic from 'next/dynamic';
 const Summary = ({ header, data, unit, className }: { header: string, data: number,unit?: string, className: string }) => {
    const countupRef = useRef(null);
 
   useEffect(() => {
     async function initCountUp() {
-      const { CountUp } = await import('countup.js');
+      const { CountUp } = await import("countup.js")
       const countUpAnim = new CountUp(countupRef.current as any, data);
       if (!countUpAnim.error) {
         countUpAnim.start();
@@ -19,7 +19,7 @@ const Summary = ({ header, data, unit, className }: { header: string, data: numb
     if (countupRef.current) {
       initCountUp();
     }
-  }, [data]); // Only runs when `data` changes
+  }, [data]);
 
 
   

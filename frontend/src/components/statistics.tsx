@@ -14,19 +14,16 @@ const Statistics = ({id}: {id?: number}) => {
       async function getValuation() {
          try {
             const totalSupply = await yieldTokenContract.methods.totalSupply(id).call({ from: account.address}).then((res: any) => {
-               console.log(res)
                setData((prev: any) => ({ ...prev, totalSupply: Number(res.toString())}))
                return res
             })
             const balance = await yieldTokenContract.methods.balanceOf(account.address, id).call().then((res: any) => {
-               console.log(res)
                setData((prev: any) => ({ ...prev, balance: Number(res.toString())}))
                return res
 
             });
             console.log(`Token balance for ${account.address}:`, balance);
             const yieldData = await yieldTokenContract.methods.yieldData(id).call({ from: account.address}).then((res: any) => {
-               console.log(res)
                setData((prev: any) => ({ ...prev, totalYield: Number(res.totalYield.toString()), season: Number(res.season.toString())}))
                return res
             })
@@ -48,7 +45,6 @@ const Statistics = ({id}: {id?: number}) => {
          getValuation() // Trigger the async function
       }
    }, [account.address, id])
-   console.log(data)
 
    return (
       <div className="w-full h-[18rem] mt-5 p-2 px-0 flex gap-3 overflow-auto custom-scroll">

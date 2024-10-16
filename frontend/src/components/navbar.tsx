@@ -16,14 +16,19 @@ const Navbar = () => {
    const [filteredSuggestions, setFilteredSuggestions] = useState<String[]>([]); // Filtered suggestions for display
    const inputTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Ref for storing the timeout ID
 
+   const params = new URLSearchParams(window.location.search);
    const handleSearch = (e: any) => {
       e.preventDefault();
       // Programmatically push to the URL with search params
-      const params = new URLSearchParams(window.location.search);
       params.set("search", query)
       router.push(`?${params.toString()}`)
    };
-
+   const toggle = () => {
+      // const value = params.get("tab") || false
+      params.set("tab", String(true))
+      router.push(`?${params.toString()}`)
+      // console.log(value)
+   }
    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;  // Get the current input value
       setQuery(value);
@@ -56,7 +61,7 @@ const Navbar = () => {
 
          <div className='flex gap-2 justify-center items-center'>
 
-            <TiThMenuOutline fontSize={25} className='hover:cursor-pointer' />
+            <TiThMenuOutline fontSize={25} className='hover:cursor-pointer' onClick={toggle}/>
             <a href="" rel="noopener noreferrer">Yield</a>
          </div>
          <form action='' method='' onSubmit={handleSearch} className="w-[50vw] lg:w-[40vw] h-[2.5rem] rounded-md bg-gray-00 flex  border border-gray-00 focus:border-gray-00 relative max-sm:hidden
