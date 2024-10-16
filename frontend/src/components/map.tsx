@@ -28,7 +28,7 @@ const Map = () => {
    const [open, setOpen] = useState(false)
    const [polygons, setPolygons] = useState<any>([])
    const search = useSearchParams()
-   const center: LatLngExpression = [Number(search.get("lat")), Number(search.get("lon"))]
+   const center: LatLngExpression = search.get("lat") && search.get("lon") ? [Number(search.get("lat")), Number(search.get("lon"))] :  [51.5680403, -0.0509105]
    const query = gql`{
       registereds {
       id

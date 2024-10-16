@@ -1,7 +1,7 @@
 "use client"
 import React, { useCallback, useEffect, useRef } from 'react'
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-const countUpModule = import('countup.js');
+// const countUpModule = import('countup.js');
 const Summary = ({ header, data, unit, className }: { header: string, data: number,unit?: string, className: string }) => {
    const countupRef = useRef(null);
 

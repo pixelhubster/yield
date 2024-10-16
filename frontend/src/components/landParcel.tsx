@@ -72,11 +72,11 @@ const LandParcel = ({ id }: { id?: number }) => {
       const data = await res.json()
       if (!data.error) setParcel({ ...data, data: {}, ...data.data[id ?? 0] })
    }
-   useCallback(() => {
-      const params = new URLSearchParams(window.location.search);
-      params.set("lat", parcel.ipfsdata.center ? parcel.ipfsdata.center[0] : 0)
-      params.set("lon", parcel.ipfsdata.center ? parcel.ipfsdata.center[1] : 0)
-      router.push(`?${params.toString()}`)
+useCallback(async () => {
+   const params = new URLSearchParams(window.location.search);
+   params.set("lat", parcel.ipfsdata.center ? parcel.ipfsdata.center[0] : 0)
+   params.set("lon", parcel.ipfsdata.center ? parcel.ipfsdata.center[1] : 0)
+   router.push(`?${params.toString()}`)
    }, [parcel, router])
    useEffect(() => {
       getYieldInfo(id)
@@ -128,22 +128,22 @@ const LandParcel = ({ id }: { id?: number }) => {
                   <GiIsland fontSize={20} />
                </div> */}
             <div className='text-[14px]'>
-               <Paragraph name='Updated At' value={`${parcel.weather.dt}`} />
+               <Paragraph name='Updated At' value={`${parcel?.weather?.dt}`} />
                <Paragraph name='Weather Id' value={`${parcel?.weather?.weather[0]?.id || ''}`} />
-               <Paragraph name='Clouds' value={`${parcel.weather.clouds.all} %`} />
-               <Paragraph name='Feels like' value={`${parcel.weather.main.feels_like || 0} `} />
+               <Paragraph name='Clouds' value={`${parcel?.weather?.clouds?.all} %`} />
+               <Paragraph name='Feels like' value={`${parcel?.weather?.main?.feels_like || 0} `} />
                <Paragraph name='Clouds' value={`${parcel?.weather?.weather[0]?.main || ''} `} />
                <Paragraph name='Icon' value={`${parcel?.weather?.weather[0]?.icon || 0}`} />
                <Paragraph name='Weather Description' value={`${parcel?.weather?.weather[0]?.description || 0}`} />
-               <Paragraph name='Temperature' value={`${parcel.weather.main.temp} K`} />
-               <Paragraph name='Min Temperature' value={`${parcel.weather.main.temp_min} K`} />
-               <Paragraph name='Max Temperature' value={`${parcel.weather.main.temp_max} K`} />
-               <Paragraph name='Atmospheric Pressure' value={`${parcel.weather.main.pressure} hPa`} />
-               <Paragraph name='Sea level' value={`${parcel.weather.main.sea_level || ''} hPa`} />
-               <Paragraph name='Grnd Level' value={`${parcel.weather.main.grnd_level || ''} hPa`} />
-               <Paragraph name='Wind Speed' value={`${parcel.weather.wind.speed} m/sec`} />
-               <Paragraph name='Wind Deg' value={`${parcel.weather.wind.deg}  degree`} />
-               <Paragraph name='Humidity' value={`${parcel.weather.main.pressure} K`} />
+               <Paragraph name='Temperature' value={`${parcel?.weather?.main?.temp} K`} />
+               <Paragraph name='Min Temperature' value={`${parcel?.weather?.main?.temp_min} K`} />
+               <Paragraph name='Max Temperature' value={`${parcel?.weather?.main?.temp_max} K`} />
+               <Paragraph name='Atmospheric Pressure' value={`${parcel?.weather?.main?.pressure} hPa`} />
+               <Paragraph name='Sea level' value={`${parcel?.weather?.main?.sea_level || ''} hPa`} />
+               <Paragraph name='Grnd Level' value={`${parcel?.weather?.main?.grnd_level || ''} hPa`} />
+               <Paragraph name='Wind Speed' value={`${parcel?.weather?.wind?.speed} m/sec`} />
+               <Paragraph name='Wind Deg' value={`${parcel?.weather?.wind?.deg}  degree`} />
+               <Paragraph name='Humidity' value={`${parcel?.weather?.main?.pressure} K`} />
             </div>
          </div>
       </div>

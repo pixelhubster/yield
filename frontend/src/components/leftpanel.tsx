@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import LandParcel from './landParcel'
+// import LandParcel from './landParcel'
 import { useSearchParams } from 'next/navigation';
 import RegisterYieldModal from './modals/registerYield';
 import ListYield from './modals/listYield';
@@ -8,7 +8,9 @@ import BuyYieldModal from './modals/buyYield';
 import { gql } from 'graphql-request';
 import queryContract, { getName, shortenAddress } from '@/app/context/query';
 import History from './history';
+import dynamic from 'next/dynamic';
 
+const LandParcel = dynamic(() => import("./landParcel"), { ssr: true})
 const Leftpanel = () => {
    const [tab, setTab] = useState<boolean>(false)
    const searchParams = useSearchParams()
