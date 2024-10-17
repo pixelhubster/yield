@@ -15,18 +15,14 @@ const LandParcel = dynamic(() => import("./landParcel"), { ssr: true })
 const Leftpanel = () => {
    const [tab, setTab] = useState<boolean>(false)
    const searchParams = useSearchParams()
-   const search = new URLSearchParams(window.location.search);
    const [data, setData] = useState<any>()
-   const [sidebar, setSidebar] = useState<any>(false)
-   // const sidebar = searchParams.get("tab")
-   const router = useRouter()
    // console.log(searchParams.get("search"))
    // const getUnixTimestamp = () => {
    //    const timestamp = Math.floor(Date.now() / 1000); // Divides by 1000 to get seconds
    //    return timestamp;
    // };
    const query = gql` {
-     yieldMinteds(where: {landTokenId: ${Number(search.get("search"))}}) {
+     yieldMinteds(where: {landTokenId: ${Number(searchParams.get("search"))}}) {
        id
        yieldId
        landTokenId
@@ -45,9 +41,8 @@ const Leftpanel = () => {
          const res = await queryContract(query);
          if (res.success) setData(res.data)
       }
-      // setSidebar(search.get("tab"))
       get()
-   }, [query])
+   }, [query, searchParams])
    // console.log(data)
    // const get = async () => {
    //    const date = getUnixTimestamp()
@@ -65,15 +60,11 @@ const Leftpanel = () => {
    // }
    // get()
    return (
-      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:bg-white max-lg:z-[40] max-lg:absolute max-lg:top-0 max-lg:shadow-md
-      ${searchParams.get("tab") ? "max-lg:flex" : "max-lg:hidden"}
-      `}>
+      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none bg-white z-[40] absolute top-0 max-lg:shadow-md
+         `}>
+         {/* // ${searchParams.get("tab") ? "max-lg:flex" : "max-lg:hidden"} */}
          <div className='w-full h-[4rem] bg-red-00 mb-5 flex justify-end items-center lg:hidden'>
-            <IoMdClose fontSize={30} color='black' className='hover:bg-gray-200 rounded' onClick={() => {
-               setSidebar(false)
-               search.set("tab", String(false))
-               router.push(`?${search.toString()}`)
-            }} />
+            <IoMdClose fontSize={30} color='black' className='hover:bg-gray-200 rounded'/>
          </div>
          <div className='card w-full pb-0 h-[20rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
             <p className='flex gap-2 items-end'>{data?.yieldMinteds[0]?.amount || 0}
@@ -100,9 +91,9 @@ const Leftpanel = () => {
             </div>
 
             <div className='w-full h-[80%] overflow-auto mt-8'>
-               {!tab ?
+               {tab ?
                   <LandParcel id={Number(searchParams.get("search"))} />
-                  : <History />
+                  : <History id={Number(searchParams.get("search"))} />
                }
 
             </div>

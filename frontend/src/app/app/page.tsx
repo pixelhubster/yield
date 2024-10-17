@@ -1,5 +1,3 @@
-
-
 import Leftpanel from "@/components/leftpanel";
 import Rightpanel from "@/components/rightpanel";
 import { Suspense } from "react";

@@ -38,8 +38,17 @@ const isAllValuesFilled = (obj: Object) => {
    console.log(res)
    return res
  }
+
+ function convertTimestampToDate(timestamp: number) {
+   const date = new Date(timestamp * 1000);
+   
+   const formattedDate = date.toLocaleDateString(); 
+   const formattedTime = date.toLocaleTimeString();
  
- export {isAllValuesFilled, shortenAddress, getName}
+   return `${formattedDate} ${formattedTime}`;
+ }
+ 
+ export {isAllValuesFilled, shortenAddress, getName, convertTimestampToDate}
 
 
 //  {
