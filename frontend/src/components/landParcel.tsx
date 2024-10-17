@@ -5,6 +5,7 @@ import { GiIsland } from "react-icons/gi";
 import { GiFarmer } from "react-icons/gi";
 import Paragraph from './cards/paragraph';
 import { useRouter } from 'next/navigation';
+import { convertTimestampToDate } from '@/app/context/query';
 
 
 const LandParcel = ({ id }: { id?: number }) => {
@@ -66,11 +67,14 @@ const LandParcel = ({ id }: { id?: number }) => {
          // }
 
       })
+   const [loading, setLoading] = useState<boolean>(false)
    const router = useRouter()
    const getYieldInfo = async (id?: number) => {
+      setLoading(true)
       const res = await fetch(`/api/register?id=${id}`);
       const data = await res.json()
       if (!data.error) setParcel({ ...data, data: {}, ...data.data[id ?? 0] })
+      setLoading(false)
    }
    useCallback(async () => {
       const params = new URLSearchParams(window.location.search);
@@ -84,11 +88,11 @@ const LandParcel = ({ id }: { id?: number }) => {
    return (
       <div className="w-full h-full text-black shadow-lg rounded-lg p-2 py-5 overflow-x-hidden custom-scroll">
 
-         {parcel.ipfsdata && (
+         {loading ?   <div className='w-full bg-[#F7F7FF] h-full flex justify-center items-center rounded-md'>
+            <span className="loading loading-dots loading-md"></span>
+         </div> : (
             <div>
-
-
-               <div className="w-full pb-4 mb-4 p-5 bg-slate-300 shadow-sm rounded-xl">
+               <div className="w-full pb-4 mb-4 p-5 bg-white shadow-sm rounded-xl">
                   <h3 className="text-md font-semibold my-2 text-center">Location
                      {/* <div className='px-4'>
                   <CiLocationArrow1 fontSize={40} />
@@ -99,7 +103,7 @@ const LandParcel = ({ id }: { id?: number }) => {
                      <Paragraph name='Owner Name' value={parcel.ipfsdata.ownerName} />
                      <Paragraph name='Ownership' value={parcel.ipfsdata.ownershipType} />
                      <Paragraph name='Land Deed' value={parcel.ipfsdata.landDeedNumber} />
-                     <Paragraph name='Created At' value={parcel.ipfsdata.created_at} />
+                     <Paragraph name='Created At' value={convertTimestampToDate(parcel.ipfsdata.created_at)} />
                      <Paragraph name='Coordinates' value={parcel.ipfsdata.coordinates} />
                      <Paragraph name='Latitude' value={parcel.ipfsdata.center && parcel?.ipfsdata?.center[0]} />
                      <Paragraph name='Longitude' value={parcel.ipfsdata.center && parcel?.ipfsdata?.center[1]} />
@@ -108,14 +112,14 @@ const LandParcel = ({ id }: { id?: number }) => {
                </div>
 
                {/* Fertility and Climate */}
-               <div className="pb-4 mb-4 bg-slate-300 p-5 rounded-xl">
+               <div className="pb-4 mb-4 bg-white p-5 rounded-xl">
                   <h3 className="text-md font-semibold text-center my-2">Soil Conditions</h3>
 
                   {/* <div className='px-4'>
                   <GiIsland fontSize={40} />
                   </div> */}
                   <div className='text-[14px]'>
-                     <Paragraph name='Updated at' value={parcel.dt || 0} />
+                     <Paragraph name='Updated at' value={convertTimestampToDate(parcel.dt || 0)} />
                      <Paragraph name='Average Rainfall' value={`${parcel.t0 || 0} mm`} />
                      <Paragraph name='Surface Temperature' value={`${parcel.t0 || 0} K`} />
                      <Paragraph name='Temperature' value={`${parcel.t10 || 0} K`} />
@@ -125,14 +129,14 @@ const LandParcel = ({ id }: { id?: number }) => {
 
 
                {/* Weather */}
-               <div className="pb-4 mb-4 bg-slate-300 p-5 rounded-xl">
+               <div className="pb-4 mb-4 bg-white p-5 rounded-xl">
                   <h3 className="text-md font-semibold my-2 text-center">Weather Conditions</h3>
 
                   {/* <div className='px-4'>
                   <GiIsland fontSize={20} />
                </div> */}
                   <div className='text-[14px]'>
-                     <Paragraph name='Updated At' value={`${parcel?.weather?.dt}`} />
+                     <Paragraph name='Updated At' value={`${convertTimestampToDate(parcel?.weather?.dt)}`} />
                      <Paragraph name='Weather Id' value={`${parcel?.weather?.weather[0]?.id || ''}`} />
                      <Paragraph name='Clouds' value={`${parcel?.weather?.clouds?.all} %`} />
                      <Paragraph name='Feels like' value={`${parcel?.weather?.main?.feels_like || 0} `} />

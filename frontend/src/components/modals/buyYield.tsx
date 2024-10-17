@@ -91,7 +91,7 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
                </div>
 
                {!(s.length > 0) &&
-                  <InputWithLabel onChange={() => {}} value='amount' name='Pay $' placeholder={amountToPay.toString()} fill={amountToPay} />}
+                  <InputWithLabel onChange={() => { }} value='amount' name='Pay $' placeholder={amountToPay.toString()} fill={amountToPay} />}
                {s.length > 0 ?
                   <CustomButton btn='Sold' className='bg-green-500 disabled:bg-green-500' disabled={true} /> :
                   <CustomButton btn='Buy' handleClick={handleClick} />

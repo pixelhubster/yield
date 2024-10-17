@@ -84,18 +84,17 @@ const Leftpanel = () => {
                }
             </div>
          </div>
-         <div className='w-full h-full max-h-full bg-sky-50 mt-8 pt-8 rounded-xl px-5 shrink overflow-hidden'>
-            <div className="w-full h-[3.5rem] rounded-full flex justify-center items-center bg-black p-[6px]">
-               <button type="button" className={`w-1/2 h-full ${!tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(false)}>Properties</button>
-               <button type="button" className={`w-1/2 h-full ${tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(true)}>History</button>
+         <div className='w-full h-full max-h-full bg-[#14213d]/80 mt-4 pt-4 rounded-xl px-3 shrink overflow-hidden'>
+            <div className="w-full h-[3.3rem] rounded-full flex justify-center items-center bg-black p-[6px]">
+               <button type="button" className={`w-1/2 text-[14px] h-full ${!tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(false)}>Properties</button>
+               <button type="button" className={`w-1/2 text-[14px] h-full ${tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(true)}>History</button>
             </div>
 
-            <div className='w-full h-[80%] overflow-auto mt-8'>
+            <div className='w-full h-[85%] overflow-auto mt-4'>
                {!tab ?
                   <LandParcel id={Number(searchParams.get("search"))} />
                   : <History id={Number(searchParams.get("search"))} />
                }
-
             </div>
          </div>
 

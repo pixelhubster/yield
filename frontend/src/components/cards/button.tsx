@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useAccount } from 'wagmi'
@@ -6,6 +7,7 @@ import { useAccount } from 'wagmi'
 const CustomButton = ({ btn, handleClick, className, disabled }: { btn?: string, handleClick?: Function, className?: string, disabled?: boolean }) => {
    const [loading, setLoading] = useState(false)
    const accounts = useAccount()
+   const router = useRouter()
    const click = async () => {
       if (accounts.isDisconnected) return toast.error("Wallet not connected")
       setLoading(true)
@@ -15,6 +17,7 @@ const CustomButton = ({ btn, handleClick, className, disabled }: { btn?: string,
          res.success && toast.success(res.message)
       }
       setLoading(false)
+      router.refresh()
    }
    return (
       <>

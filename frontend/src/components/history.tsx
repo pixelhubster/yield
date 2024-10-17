@@ -6,8 +6,10 @@ import React, { useEffect, useState } from 'react'
 
 const History = ({ id }: { id?: number }) => {
    const [data, setData] = useState<any>([])
+   const [loading, setLoading] = useState<boolean>()
    useEffect(() => {
       const get = async () => {
+         setLoading(true)
          const query = gql`
          {
   yieldMinteds(where: {yieldId: ${id}}) {
@@ -84,13 +86,14 @@ const History = ({ id }: { id?: number }) => {
             const sorted = sortExplorer(history.data)
             setData(sorted)
          }
+         setLoading(false)
       }
       get()
    }, [id])
    return (
-      <div className="w-full h-full text-black bg-gray-400 shadow-lg rounded-lg p-2 py-5 overflow-x-hidden custom-scroll">
+      <div className="w-full h-full text-black bg-[#F7F7FF] shadow-lg rounded-lg p-2 py-5 overflow-x-hidden custom-scroll">
          {data.map((log: any, key: number) => (
-            <div key={key} className='w-full bg-white px-4 py-2 text-[12px] my-1 rounded-md'>
+            <div key={key} className='w-full bg-white shadow px-4 py-2 text-[12px] my-1 rounded-md'>
                <div className='w-full flex justify-between items-center'>{log.method}
                   <i>
                      {convertTimestampToDate(log.blockTimestamp)}
@@ -100,11 +103,15 @@ const History = ({ id }: { id?: number }) => {
                   <i className='shrink-0'>
                      {log.type}
                   </i>
-                  <a href={`  ${log.transactionhash}`}className='overflow-hidden text-blue-600 underline flex text-ellipsis line-clamp-1'>{log.transactionHash}</a>
+                  <a target='_blank' rel="noopener noreferrer" href={`https://sepolia.basescan.org/tx/${log.transactionHash}`}className='overflow-hidden text-blue-600 underline flex text-ellipsis line-clamp-1'>{log.transactionHash}</a>
                </div>
             </div>
          )
          )}
+         {loading &&
+         <div className='w-full h-full flex justify-center items-center'>
+            <span className="loading loading-dots loading-md"></span>
+         </div>}
          {data.length == 0 && <div className='w-full h-full flex justify-center items-center text-sm'>No history available</div>}
 
       </div>
