@@ -22,7 +22,7 @@ const LandParcel = ({ id }: { id?: number }) => {
             id: '',
             geo_json: { type: '', properties: {}, geometry: '' },
             name: "",
-            center: [0, 0],
+            center: [51.5680403, -0.0509105],
             area: 0,
             user_id: '0',
             created_at: 0,
@@ -76,15 +76,22 @@ const LandParcel = ({ id }: { id?: number }) => {
       if (!data.error) setParcel({ ...data, data: {}, ...data.data[id ?? 0] })
       setLoading(false)
    }
-   useCallback(async () => {
+   const updateCoord = useCallback(async () => {
       const params = new URLSearchParams(window.location.search);
       params.set("lat", parcel.ipfsdata.center ? parcel.ipfsdata.center[0] : 0)
       params.set("lon", parcel.ipfsdata.center ? parcel.ipfsdata.center[1] : 0)
       router.push(`?${params.toString()}`)
    }, [parcel, router])
+   // updateCoord()
    useEffect(() => {
       getYieldInfo(id)
    }, [id])
+   useEffect(() => {
+      if (parcel.ipfsdata.center) {
+        updateCoord();
+      }
+    }, [parcel, updateCoord]);
+  
    return (
       <div className="w-full h-full text-black shadow-lg rounded-lg p-2 py-5 overflow-x-hidden custom-scroll">
 
