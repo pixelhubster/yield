@@ -105,6 +105,7 @@ const History = ({ id }: { id?: number }) => {
             </div>
          )
          )}
+         {data.length == 0 && <div className='w-full h-full flex justify-center items-center text-sm'>No history available</div>}
 
       </div>
    )
