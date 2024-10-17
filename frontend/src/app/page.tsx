@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import AboutPage from "@/components/ui/shared/About";
 import FarmingAndForm from "@/components/ui/shared/RegisterForm";
+import { useRouter } from "next/navigation";
 
 const images = [
   "https://img.freepik.com/premium-photo/vibrant-assortment-fresh-vegetables-fruits-arranged-wooden-surface_936494-8074.jpg?w=1060",
@@ -26,6 +27,7 @@ const images = [
 const ModernHeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,15 +46,16 @@ const ModernHeroSection = () => {
   return (
     <div
       className="min-h-screen flex flex-col bg-gradient-to-r from-green-800 to-green-800"
-      name="startview"
+      id="startview"
     >
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-10 bg-white-50/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Leaf className="h-8 w-8 text-green-600" />
+           Yield
           <div className="hidden md:flex space-x-6">
             <div className="flex gap-4">
-              <Link
+              {/* <Link
                 // onClick={() => scrollToSection(startView)}
                 to="startview"
                 className="text-white hover:text-green-200 cursor-pointer transition-colors"
@@ -66,7 +69,7 @@ const ModernHeroSection = () => {
                 className="text-white hover:text-green-200 cursor-pointer transition-colors"
               >
                 Register
-              </Link>
+              </Link> */}
             </div>
           </div>
           <Button variant="outline" className="md:hidden">
@@ -77,7 +80,7 @@ const ModernHeroSection = () => {
 
       {/* Hero Section */}
       <main className="flex-grow container mx-auto px-4 md:px-8 py-8 md:py-12 lg:py-20">
-        <div className="flex flex-col lg:flex-row items-center justify-around gap-10">
+        <div className="flex flex-col lg:flex-row items-center justify-around gap-10 mt-[7rem]">
           {/* Text Section */}
           <motion.div
             className="lg:w-[50%]"
@@ -86,17 +89,15 @@ const ModernHeroSection = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-5xl  font-bold text-white mb-6">
-              CRYPTOFARMING
+            Empowering Growth Through Yield-Driven Innovation
             </h1>
             <p className="text-xl md:text-2xl text-green-200 mb-8">
-              The highest quality plants for your garden and backyard. We
-              carefully select and cultivate each plant to thrive in any
-              environment.
+            Unlock the potential of sustainable investments and maximize returns with our seamless Yield platform, designed for farmers, investors, and landowners alike.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md transition-colors duration-300 font-medium text-lg shadow-md hover:shadow-lg">
-                Connect wallet
+              <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl transition-colors duration-300 font-medium text-lg shadow-md hover:shadow-lg" onClick={()=> router.push("/app")}>
+                Launch App
               </button>
             </div>
           </motion.div>
@@ -108,7 +109,7 @@ const ModernHeroSection = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="aspect-square bg-green-200 rounded-full  overflow-hidden relative">
+            <div className="aspect-square bg-green-200 rounded-full overflow-hidden relative">
               <AnimatePresence>
                 <motion.img
                   key={currentImageIndex}
@@ -157,9 +158,8 @@ const ModernHeroSection = () => {
             <div>
               <h3 className="text-xl font-semibold mb-4">About Us</h3>
               <p className="text-sm">
-                Phytosphere - your reliable partner in creating the perfect
-                garden and backyard. We offer the highest quality plants and
-                expert support.
+                Yield - your reliable partner in creating the perfect
+                tokenized farm. We offer the highest quality of return on investment and loans.
               </p>
             </div>
             <div>
@@ -167,15 +167,15 @@ const ModernHeroSection = () => {
               <ul className="space-y-2">
                 <li className="flex items-center">
                   <Phone className="h-4 w-4 mr-2" />
-                  <span>+7 (123) 456-7890</span>
+                  <span>+233 (559) 761-460</span>
                 </li>
                 <li className="flex items-center">
                   <Mail className="h-4 w-4 mr-2" />
-                  <span>info@phytosphere.com</span>
+                  <span>pixelhubster@gmail.com</span>
                 </li>
                 <li className="flex items-center">
                   <MapPin className="h-4 w-4 mr-2" />
-                  <span>Moscow, Garden Street, 123</span>
+                  <span>Accra, Ghana</span>
                 </li>
               </ul>
             </div>
@@ -198,7 +198,7 @@ const ModernHeroSection = () => {
             </div>
           </div>
           <div className="mt-8 pt-4 border-t border-green-700 text-center text-sm">
-            © 2024 Phytosphere. All rights reserved.
+            © 2024 Yield. All rights reserved.
           </div>
         </div>
       </footer>

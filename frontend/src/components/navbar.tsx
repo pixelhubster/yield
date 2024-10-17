@@ -9,6 +9,7 @@ import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 import { config } from '@/app/context/ensConfig'
 import { getEnsAddress } from '@wagmi/core'
+import { Leaf } from 'lucide-react'
 
 const Navbar = () => {
    const [query, setQuery] = useState<string>('');
@@ -61,11 +62,12 @@ const Navbar = () => {
 
          <div className='flex gap-2 justify-center items-center'>
 
-            <TiThMenuOutline fontSize={25} className='hover:cursor-pointer' onClick={toggle}/>
-            <a href="" rel="noopener noreferrer">Yield</a>
+            {/* <TiThMenuOutline fontSize={25} className='hover:cursor-pointer' onClick={toggle} /> */}
+            <Leaf className="h-6 w-6 m-0 text-green-600" />
+            <a href="" rel="noopener noreferrer" className='mx-0 text-green-600 font-semibold'>Yield</a>
          </div>
-         <form action='' method='' onSubmit={handleSearch} className="w-[50vw] lg:w-[40vw] h-[2.5rem] rounded-md bg-gray-00 flex  border border-gray-00 focus:border-gray-00 relative max-sm:hidden
-   ">
+         <form action='' method='' onSubmit={handleSearch} className="w-[50vw] lg:w-[40vw] h-[2.5rem] rounded-md bg-gray-00 flex  border border-gray-00 focus:border-gray-00 relative max-sm:hidden overflow-hidden mx-4
+         ">
 
             <input type="search" name="ens" id="" className="w-full h-full px-2 outline-none text-black focus-within:text-black bg-white peer/active" autoComplete='off' placeholder="land id" value={query} onChange={handleInputChange} />
             <button className="h-full w-fit bg-white hover:bg-gray-300 px-3" type='submit'>

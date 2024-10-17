@@ -60,12 +60,12 @@ const Leftpanel = () => {
    // }
    // get()
    return (
-      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none bg-white z-[40] absolute top-0 max-lg:shadow-md
+      <div className={`w-[20rem] xl:w-[25%] sm:w-[25rem] h-full p-5 flex flex-col flex-none max-lg:bg-white max-lg:z-[40] max-lg:absolute max-lg:top-0 max-lg:shadow-md
+         ${searchParams.get("tab") ? "max-lg:flex" : "max-lg:hidden"}
          `}>
-         {/* // ${searchParams.get("tab") ? "max-lg:flex" : "max-lg:hidden"} */}
-         <div className='w-full h-[4rem] bg-red-00 mb-5 flex justify-end items-center lg:hidden'>
+         {/* <div className='w-full h-[4rem] bg-red-00 mb-5 flex justify-end items-center lg:hidden'>
             <IoMdClose fontSize={30} color='black' className='hover:bg-gray-200 rounded'/>
-         </div>
+         </div> */}
          <div className='card w-full pb-0 h-[20rem] bg-[#150578] flex justify-center items-center text-white text-4xl font-semibold'>
             <p className='flex gap-2 items-end'>{data?.yieldMinteds[0]?.amount || 0}
                {/* <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0].yieldType}</p> */}
@@ -84,14 +84,14 @@ const Leftpanel = () => {
                }
             </div>
          </div>
-         <div className='w-full h-full max-h-full bg-white mt-8 pt-8 rounded-xl px-5 shrink overflow-hidden'>
+         <div className='w-full h-full max-h-full bg-sky-50 mt-8 pt-8 rounded-xl px-5 shrink overflow-hidden'>
             <div className="w-full h-[3.5rem] rounded-full flex justify-center items-center bg-black p-[6px]">
                <button type="button" className={`w-1/2 h-full ${!tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(false)}>Properties</button>
                <button type="button" className={`w-1/2 h-full ${tab ? 'bg-blue-700' : 'bg-transparent'} rounded-3xl`} onClick={() => setTab(true)}>History</button>
             </div>
 
             <div className='w-full h-[80%] overflow-auto mt-8'>
-               {tab ?
+               {!tab ?
                   <LandParcel id={Number(searchParams.get("search"))} />
                   : <History id={Number(searchParams.get("search"))} />
                }

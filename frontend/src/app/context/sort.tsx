@@ -81,7 +81,5 @@ export const sortExplorer = (obj: any) => {
       }
    })
    const sorted = list.sort((a,b) => b.blockTimestamp - a.blockTimestamp)
-   console.log(list)
-   console.log(sorted)
    return sorted
 }
