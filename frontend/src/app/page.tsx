@@ -96,7 +96,7 @@ const ModernHeroSection = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl transition-colors duration-300 font-medium text-lg shadow-md hover:shadow-lg" onClick={()=> router.push("/app")}>
+              <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl transition-colors duration-300 font-medium text-lg shadow-md hover:shadow-lg" onClick={()=> router.push("/app?search=1")}>
                 Launch App
               </button>
             </div>

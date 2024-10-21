@@ -16,7 +16,7 @@ const Navbar = () => {
    const router = useRouter();
    const [filteredSuggestions, setFilteredSuggestions] = useState<String[]>([]); // Filtered suggestions for display
    const inputTimeoutRef = useRef<NodeJS.Timeout | null>(null); // Ref for storing the timeout ID
-
+   console.log("query", query)
    const params = new URLSearchParams(window.location.search);
    const handleSearch = (e: any) => {
       e.preventDefault();
@@ -43,7 +43,7 @@ const Navbar = () => {
             const res = await getEnsAddress(config, {
                name: normalize(value),
             });
-            console.log(res);
+            // console.log(res);
 
             if (value) {
                const filtered = [res || ""];

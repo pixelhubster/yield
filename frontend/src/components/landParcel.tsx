@@ -73,7 +73,7 @@ const LandParcel = ({ id }: { id?: number }) => {
       setLoading(true)
       const res = await fetch(`/api/register?id=${id}`);
       const data = await res.json()
-      if (!data.error) setParcel({ ...data, data: {}, ...data.data[id ?? 0] })
+      if (!data.error) setParcel({ ...data, data: {}, ...data.data[id as number] })
       setLoading(false)
    }
    const updateCoord = useCallback(async () => {

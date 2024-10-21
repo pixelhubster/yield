@@ -21,6 +21,7 @@ const Leftpanel = () => {
    //    const timestamp = Math.floor(Date.now() / 1000); // Divides by 1000 to get seconds
    //    return timestamp;
    // };
+   console.log(Number(searchParams.get("search")) === 0 && 1)
    const query = gql` {
      yieldMinteds(where: {landTokenId: ${Number(searchParams.get("search"))}}) {
        id
