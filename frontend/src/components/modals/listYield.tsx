@@ -17,7 +17,7 @@ const ListYield = ({id}: {id?: number}) => {
    }
    const handleClick = async () => {
       try {
-         const res = await yieldTokenContract.methods.listTokenForSale(value.tokenId, value.qty, value.pricePerShare).send({ from: account.address});
+         const res = await yieldTokenContract.methods.listTokenForSale(id, value.qty, value.pricePerShare).send({ from: account.address});
          return { success: true, message: "Yield Token Listed Successfully"}
       } catch (error) {
          return { error: "Failed to List Yield Token", contractError: error}

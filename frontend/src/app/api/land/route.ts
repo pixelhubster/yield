@@ -6,7 +6,6 @@ const appid = process.env.AGROMONITORING_API_KEY
 export async function GET(req: NextRequest) {
    try {
       const landDetails = await landContract.methods.getAllLandDetails().call()
-      console.log(landDetails)
       const returnData = []
       for (let index = 0; index <= landDetails.length; index++) {
          if (landDetails[index].id === "") {

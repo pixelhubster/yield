@@ -91,12 +91,20 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
                </div>
 
                {!(s.length > 0) &&
-                  <InputWithLabel onChange={() => { }} value='amount' name='Pay $' placeholder={amountToPay.toString()} fill={amountToPay} />}
+                  !Number.isNaN(amountToPay) &&
+                  <InputWithLabel onChange={() => { }} value='amount' name='Pay $' placeholder={amountToPay.toString()} fill={amountToPay} />
+               }
+               {data?.yieldListeds?.length == 0 &&
+                  <div className='w-full h-full flex justify-center items-center text-sm font-semibold p-10 text-gray-600'>None listed</div>
+               }
                {s.length > 0 ?
                   <CustomButton btn='Sold' className='bg-green-500 disabled:bg-green-500' disabled={true} /> :
-                  <CustomButton btn='Buy' handleClick={handleClick} />
+                  !Number.isNaN(amountToPay) &&
+                  <>
+                     <CustomButton btn='Buy' handleClick={handleClick} />
+                     <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
+                  </>
                }
-               <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
             </div>
             <label className="modal-backdrop" htmlFor="my_modal_9">Close</label>
          </div>
