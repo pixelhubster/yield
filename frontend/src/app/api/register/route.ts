@@ -1,5 +1,6 @@
 import pinata from "@/backend/ipfs";
 import { landContract } from "@/backend/web3";
+import { error } from "console";
 import { NextRequest, NextResponse } from "next/server"
 
 const appid = process.env.AGROMONITORING_API_KEY
@@ -52,27 +53,27 @@ export async function GET(req: Request) {
    try {
       const contractResponse = await landContract.methods.ipfsHash().call()
       const data = await pinata.gateways.get(cid || contractResponse);
-      console.log(contractResponse)
       // const data = await pinata.gateways.get("bafkreidmgywjwzkictk3t22iuqduc7cnmfkwqqjkc4g2ozvdzu4d3zghe4");
-      const blob = await (data as any).data.text().then((text: any) => {
+      // const blob = data.data
+      const blob = (data as any)?.data?.text && await (data as any)?.data?.text().then((text: any) => {
          return JSON.parse(text)
       })
       const result = blob ?? data.data;
-      console.log(result)
       if (id) {
          const tokenUri = await landContract.methods.tokenURI(id).call();
          const ipfsResponse = await pinata.gateways.get(tokenUri)
-         const blob = await (ipfsResponse as any).data.text().then((text: any) => {
+         const blob =  (ipfsResponse as any)?.data?.text && await (ipfsResponse as any).data.text().then((text: any) => {
             return JSON.parse(text)
          }).catch((error: any) => {
             return {}
          })
-         const ifpsData = blob ?? data.data;
+         const ifpsData = blob ?? ipfsResponse.data;
          return NextResponse.json({id: id, tokenUri: tokenUri, ipfsdata: ifpsData, ...result}, { status: 200})
       }
       // if (result.data[0].weather.cod) return NextResponse.json({error: "Corrupted file"}, { status: 404}) 
       return NextResponse.json({data: result}, {status: 200})
    } catch(e) {
+      console.log(e)
       return NextResponse.json(
          { error: "Internal Server Error" },
          { status: 500 }
