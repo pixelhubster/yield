@@ -1,5 +1,6 @@
 "use client"
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+// import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ConnectButton, useAccount } from '@particle-network/connectkit'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
@@ -92,6 +93,7 @@ const Navbar = () => {
          <div className="flex gap-5 items-center">
             <LiquidateModal />
             <ConnectButton />
+            {/* <ConnectButton /> */}
          </div>
       </div>
    )
