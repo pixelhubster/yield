@@ -3,11 +3,54 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useAccount } from 'wagmi'
+import { AAWrapProvider, SendTransactionMode, SmartAccount } from '@particle-network/connectkit/aa'
+import { useSmartAccount } from '@particle-network/connectkit'
+import Web3, { type EIP1193Provider } from 'web3'
+import { parseEther } from 'viem'
+import {  web3 } from '@/backend/web3'
 
 const CustomButton = ({ btn, handleClick, className, disabled }: { btn?: string, handleClick?: Function, className?: string, disabled?: boolean }) => {
    const [loading, setLoading] = useState(false)
    const accounts = useAccount()
    const router = useRouter()
+   const smartAccount = useSmartAccount()
+   console.log(smartAccount)
+   const customProvider = smartAccount ? new Web3(new AAWrapProvider(smartAccount, SendTransactionMode.Gasless) as any) : null;
+   console.log(customProvider)
+   
+   const executeTxNative = async () => {
+      try {
+         const tx = {
+            to: "0xf0830060f836B8d54bF02049E5905F619487989e",
+            value: parseEther("0.0001").toString(),
+            data: "0x",
+         };
+         
+         // Fetch feequotes and use verifyingPaymasterGasless for a gasless transaction
+         const feeQuotesResult = await smartAccount?.getFeeQuotes(tx);
+         // const feeQuotesResult2 = await newSmartAccount?.getFeeQuotes(tx);
+         // console.log(newSmartAccount?.getAddress,newSmartAccount?.getAccount)
+         // console.log(feeQuotesResult2)
+         const { userOp, userOpHash } =
+            feeQuotesResult?.verifyingPaymasterGasless || {};
+
+         if (userOp && userOpHash) {
+            const txHash =
+               (await smartAccount?.sendUserOperation({
+                  userOp,
+                  userOpHash,
+               })) || null;
+
+            console.log("Transaction sent:", txHash);
+         } else {
+            console.error("User operation is undefined");
+         }
+      } catch (error) {
+         console.error("Failed to send transaction:", error);
+      } finally {
+      }
+   };
+   executeTxNative()
    const click = async () => {
       if (accounts.isDisconnected) return toast.error("Wallet not connected")
       setLoading(true)

@@ -5,35 +5,35 @@ import yieldLendingAbi from "./contract/YieldLending.json"
 import { AAWrapProvider, SendTransactionMode, SendTransactionEvent, SmartAccount } from "@particle-network/connectkit/aa";
 
 
-const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string
-const clientKey = process.env.NEXT_PUBLIC_CLIENT_KEY as string
-const appId = process.env.NEXT_PUBLIC_APP_ID as string
+// const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string
+// const clientKey = process.env.NEXT_PUBLIC_CLIENT_KEY as string
+// const appId = process.env.NEXT_PUBLIC_APP_ID as string
 
-const smartAccount = new SmartAccount(provider, {
-   projectId,
-   clientKey,
-   appId,
-   aaOptions: {
-      accountContracts: {
-         BICONOMY: [
-            { 
-               version: '1.0.0',
-               chainIds: [],
-            },
-            {
-               version: '2.0.0',
-               chainIds: [],
-            }
-         ],
-      },
-      paymasterApiKeys: [{
-         chainId: 1,
-         apiKey: ""
-      }]
-   }
-
-})
-const wrapProvider = new AAWrapProvider(smartAccount, SendTransactionMode.UserPaidNative)
+// const smartAccount = new SmartAccount(new AAWrapProvider(, SendTransactionMode.Gasless), {
+//    projectId,
+//    clientKey,
+//    appId,
+//    aaOptions: {
+//       accountContracts: {
+//          BICONOMY: [
+//             { 
+//                version: '1.0.0',
+//                chainIds: [],
+//             },
+//             {
+//                version: '2.0.0',
+//                chainIds: [],
+//             }
+//          ],
+//       },
+//       paymasterApiKeys: [{
+//          chainId: 1,
+//          apiKey: ""
+//       }]
+//    }
+// })
+// smartAccount.setSmartAccountContract({ name: 'BICONOMY', version: '2.0.0'})
+// const wrapProvider = new AAWrapProvider(smartAccount, SendTransactionMode.UserPaidNative)
 
 
 const usdcAbi = [
@@ -73,4 +73,34 @@ if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
 }
 
 
-export { landContract, yieldTokenContract, yieldLendingContract, usdcContract, web3}
+
+// const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string
+// const clientKey = process.env.NEXT_PUBLIC_CLIENT_KEY as string
+// const appId = process.env.NEXT_PUBLIC_APP_ID as string
+
+// const newSmartAccount = new SmartAccount(web3, {
+//    projectId,
+//    clientKey,
+//    appId,
+//    aaOptions: {
+//       accountContracts: {
+//          BICONOMY: [
+//             {
+//                version: '1.0.0',
+//                chainIds: [],
+//             },
+//             {
+//                version: '2.0.0',
+//                chainIds: [],
+//             }
+//          ],
+//       },
+//       paymasterApiKeys: [{
+//          chainId: 1,
+//          apiKey: ""
+//       }]
+//    }
+// })
+// newSmartAccount.setSmartAccountContract({ name: 'BICONOMY', version: '2.0.0' })
+
+export { landContract, yieldTokenContract, yieldLendingContract, usdcContract, web3 }
