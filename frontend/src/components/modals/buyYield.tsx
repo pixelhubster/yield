@@ -16,12 +16,19 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
    let amountToPay = data?.yieldListeds[skey]?.pricePerShare * data?.yieldListeds[skey]?.amount
    const big = Web3.utils.toWei(BigInt(amountToPay || 0), "ether")
    const handleClick = async () => {
-      try {
-         const res = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).send({ from: account.address, value: amountToPay });
-         return { success: true, message: "Yield Token Bought Successfully" }
-      } catch (error) {
-         return { error: "Failed to Buy Yield Token", contractError: error }
-      }
+      // try {
+         const txData = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).encodeABI();
+         console.log(txData)
+         const tx = {
+            to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+            value: amountToPay,
+            data: txData
+         }
+         // const res = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).send({ from: account.address, value: amountToPay });
+         return {success: true, message: "Yield Token Bought Successfully", tx, error: "Failed to Buy Yield Token"  }
+      // } catch (error) {
+      //    return { error: "Failed to Buy Yield Token", contractError: error }
+      // }
    }
    useEffect(() => {
       const query = gql`{

@@ -51,7 +51,9 @@ export async function GET(req: Request) {
    const id = searchParams.get("id")
    try {
       const contractResponse = await landContract.methods.ipfsHash().call()
+      console.log(contractResponse)
       const data = await pinata.gateways.get(cid || contractResponse);
+      console.log(data)
       // const data = await pinata.gateways.get("bafkreidmgywjwzkictk3t22iuqduc7cnmfkwqqjkc4g2ozvdzu4d3zghe4");
       const blob = await (data as any).data.text().then((text: any) => {
          return JSON.parse(text)

@@ -20,11 +20,17 @@ const RegisterYieldModal = ({id}: {id?: number}) => {
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
-      if (!isAllValuesFilled(value)) return { error: "Some fields are empty"}
+      if (!isAllValuesFilled(value)) return { sucess: false, error: "Some fields are empty"}
       try {
-         const res = await yieldTokenContract.methods.mintYield(value.tokenId, value.yieldType, value.season,value.totalYield, value.amount).send({ from: account.address});
-         console.log(res)
-         return { success: true, message: "Yield Registered Successfully"}
+         // const res = await yieldTokenContract.methods.mintYield(value.tokenId, value.yieldType, value.season,value.totalYield, value.amount).send({ from: account.address});
+         const txData = await yieldTokenContract.methods.mintYield(value.tokenId, value.yieldType, value.season,value.totalYield, value.amount).encodeABI();
+         const tx = {
+            to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+            value: 0,
+            data: txData
+         }
+         // console.log(res)
+         return { success: true, message: "Yield Registered Successfully", tx, error: "Failed to Register Yield" }
       } catch (error) {
          return { error: "Failed to Register Yield", contractError: error}
       }
