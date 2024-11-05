@@ -59,7 +59,7 @@ export async function GET(req: Request) {
       //    return JSON.parse(text)
       // })
       // const result = blob ?? data.data;
-      const result = data.data;
+      const result = data.data as object;
       console.log(result)
       if (id) {
          const tokenUri = await landContract.methods.tokenURI(id).call();
@@ -70,7 +70,7 @@ export async function GET(req: Request) {
          //    return {}
          // })
          // const ifpsData = blob ?? data.data;
-         const ifpsData = ipfsResponse.data;
+         const ifpsData = ipfsResponse.data;result
          console.log(ifpsData)
          return NextResponse.json({id: id, tokenUri: tokenUri, ipfsdata: ifpsData, ...result}, { status: 200})
       }
