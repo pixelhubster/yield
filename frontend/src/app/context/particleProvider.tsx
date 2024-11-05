@@ -97,10 +97,10 @@ const smartAccount = new SmartAccount(web3.currentProvider, {
            chainIds: [baseSepolia.id]
          }]
        },
-      paymasterApiKeys: [{
-         chainId: baseSepolia.id,
-         apiKey: "B7cnebdzM.08f1b95e-afc9-4d25-a4c1-a361abe33c5a"
-      }]
+      // paymasterApiKeys: [{
+      //    chainId: baseSepolia.id,
+      //    apiKey: ""
+      // }]
    },
    // networkConfig: { dappAPIKey: "", chainId: baseSepolia.id }
 })
