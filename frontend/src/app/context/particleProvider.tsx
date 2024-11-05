@@ -83,8 +83,6 @@ const config = createConfig({
 //    wallet: { displayWalletEntry: true, uiMode: "dark"}
 // })
 const provider = new Web3.providers.HttpProvider(process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL as string);
-
-
 const smartAccount = new SmartAccount(web3.currentProvider, {
    projectId,
    clientKey,
