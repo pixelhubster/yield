@@ -30,18 +30,11 @@ const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: str
       async function fetch() {
          const account = await smartAccount?.getAccount()
          const address = await smartAccount?.getAddress()
-         console.log(account, address)
       }
       fetch()
    }, [smartAccount])
    const executeTxNative = async (tx: any) => {
       try {
-         //   const tx = {
-         //     to: '0xf0830060f836B8d54bF02049E5905F619487989e',
-         //     value: parseEther("0.000001").toString(),
-         //     data: "0x",
-         //   };
-
          // Fetch feequotes and use verifyingPaymasterGasless for a gasless transaction
          const feeQuotesResult = await smartAccount?.getFeeQuotes(tx);
          console.log(feeQuotesResult)
@@ -73,7 +66,6 @@ const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: str
          try {
             const draft = await handleClick()
             const res = await executeTxNative(draft.tx)
-            // res.success ? toast.success(res.message) : (res.error && res.error.length>0) &&toast.error(res.error)
             !res.ok && console.error(res.error, (res as any).message.message)
             res.ok ? toast.success(draft.message) : (res.error && res.error.length > 0) && toast.error(draft.error)
          } catch (error) {
@@ -81,7 +73,6 @@ const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: str
          }
       }
       setLoading(false)
-      // router.refresh()
    }
    return (
       <>

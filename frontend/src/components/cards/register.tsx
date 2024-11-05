@@ -33,8 +33,8 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
          const data = await res.json()
          // console.log(data)
          if (res.ok) {
-            const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
-            console.log(tokenId)
+            // const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
+            // console.log(tokenId)
             const txData = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).encodeABI()
             const tx  = {
                to: process.env.NEXT_PUBLIC_LAND_CONTRACT,
@@ -45,7 +45,7 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
             // router.refresh()
             // const search = new URLSearchParams()
             // search.set("search", tokenId)
-            return { success: true, message: "Registered Land Successfully", tx}
+            return { success: true, message: "Registered Land Successfully", tx, error: "Failed to post data"}
          } else {
             return { error: "Failed to post data"}
          }

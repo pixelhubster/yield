@@ -21,8 +21,9 @@ const Leftpanel = () => {
    //    const timestamp = Math.floor(Date.now() / 1000); // Divides by 1000 to get seconds
    //    return timestamp;
    // };
+   const id = Number(searchParams.get("search"));
    const query = gql` {
-     yieldMinteds(where: {landTokenId: ${Number(searchParams.get("search"))}}) {
+     yieldMinteds(where: {landTokenId: ${id}}) {
        id
        yieldId
        landTokenId
@@ -43,7 +44,6 @@ const Leftpanel = () => {
       }
       get()
    }, [query, searchParams])
-   // console.log(data)
    // const get = async () => {
    //    const date = getUnixTimestamp()
    //    const polygon = "670041676419591af8d66659";
@@ -75,7 +75,7 @@ const Leftpanel = () => {
             {/* <p className='font-bold text-sm text-white'>{getName(data?.yieldMinteds[0].owner)}</p> */}
             <p className='font-bold text-sm text-white'>{data?.yieldMinteds[0]?.owner && shortenAddress(data?.yieldMinteds[0]?.owner)}</p>
             <div className='w-full flex justify-center gap-2 pt-8 bottom-5 flex-shrink px-3 z-[20]'>
-               <RegisterYieldModal id={data?.yieldMinteds[0]?.yieldId} />
+               <RegisterYieldModal id={id} />
                {data?.yieldMinteds.length > 0 &&
                   <>
                      <ListYield id={data?.yieldMinteds[0]?.yieldId || 0} />

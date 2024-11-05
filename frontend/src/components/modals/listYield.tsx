@@ -3,10 +3,8 @@ import React, { useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import CustomButton from '../cards/button'
 import { yieldTokenContract } from '@/backend/web3'
-import { useAccount } from 'wagmi'
 
 const ListYield = ({ id }: { id?: number }) => {
-   const account = useAccount()
    const [value, setValue] = useState({
       tokenId: 0,
       qty: 0,

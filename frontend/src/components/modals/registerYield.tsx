@@ -1,16 +1,13 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import CustomButton from '../cards/button'
-import { useAccount } from 'wagmi'
-import toast from 'react-hot-toast'
 import { yieldTokenContract } from '@/backend/web3'
 import { isAllValuesFilled } from '@/app/context/query'
 
 const RegisterYieldModal = ({id}: {id?: number}) => {
-   const account = useAccount()
    const [value, setValue] = useState({
-      tokenId: 0,
+      tokenId: id,
       yieldType: "",
       season: "",
       totalYield: "",
@@ -43,12 +40,11 @@ const RegisterYieldModal = ({id}: {id?: number}) => {
          <div className="modal bg-white text-black" role="dialog">
             <div className="modal-box bg-white pt-2">
                <h3 className="text-lg font-bold text-center py-4">Register Yield</h3>
-               <InputWithLabel value='tokenId' name='Token Id' placeholder='Token Id' onChange={handleChange} fill={id} />
+               {/* <InputWithLabel key={33} value='landId' name='Land Id' placeholder='Token Id' onChange={handleChange} fill={id} /> */}
                <InputWithLabel value='yieldType' name='Yield Type' placeholder='e.g crop, maize' onChange={handleChange}/>
                <InputWithLabel value='season' name='Season' placeholder='months to harvest ' onChange={handleChange}/>
                <InputWithLabel value='totalYield' name='Total Yield' placeholder='e.g amount of expected yield ' onChange={handleChange}/>
                <InputWithLabel value='amount' name='Mint Amount' placeholder='e.g Total yield token minted' onChange={handleChange}/>
-               {/* <button className='btn w-full bg-blue-900/90 border-0 hover:bg-blue-900'>Register</button> */}
                <CustomButton btn='Register' handleClick={handleRegister}/>
                <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
             </div>

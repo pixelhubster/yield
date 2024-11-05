@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import RainbowKitSetup from "./context/rainbowKit";
 import { Toaster } from "react-hot-toast"
 import { ParticleConnectKit } from "./context/particleProvider";
 const geistSans = localFont({
@@ -32,9 +31,7 @@ export default function RootLayout({
          >
             <Toaster />
             <ParticleConnectKit>
-               <RainbowKitSetup>
                   {children}
-               </RainbowKitSetup>
             </ParticleConnectKit>
          </body>
       </html>
