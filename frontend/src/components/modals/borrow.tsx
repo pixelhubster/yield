@@ -1,14 +1,23 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import CustomButton from '../cards/button'
 import { web3, yieldLendingContract, yieldTokenContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 import { stringToBytes } from 'viem'
 import Web3 from 'web3'
+import { useSmartAccount } from '@particle-network/connectkit'
 
 const BorrowModal = ({ id }: { id?: number }) => {
-   const account = useAccount()
+   const smartAccount = useSmartAccount()
+   const [address, setAddress] = useState<string>()
+   useEffect(() => {
+      async function get() {
+         const address = await smartAccount?.getAddress()
+         setAddress(address)
+      }
+      get()
+   })
    const [value, setValue] = useState({
       tokenId: 0,
       qty: 0,
@@ -28,17 +37,24 @@ const BorrowModal = ({ id }: { id?: number }) => {
          //    from: account.address,
          // })
         
-         const approval = await yieldTokenContract.methods
+         const approvalTxData = await yieldTokenContract.methods
             .setApprovalForAll(yieldLendingContract.options.address, true)
-            .send({ from: account.address });
-
-         console.log('Approval granted:', approval);
-         const valuation = await yieldLendingContract.methods.getYieldValuationInUsdc(id).call({ from: account.address })
+            .encodeABI()
+         const approvalTx = {
+            to: process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT,
+            value: 0,
+            data: approvalTxData
+         }
+         // console.log('Approval granted:', approval);
+         const valuation = await yieldLendingContract.methods.getYieldValuationInUsdc(id).call({ from: address })
          console.log(valuation)
-         const res = await yieldLendingContract.methods.borrow(id, value.qty, stringToBytes(""), value.minLoanAmount, value.maxLiquidation).send({ from: account.address});
-         // const res = await yieldLendingContract.methods.borrow(0, 500, stringToBytes(""), 4, 10).send({ from: account.address });
-         console.log(res)
-         return { success: true, message: `Borrowed ${30} USDC with Yield Token ${value.tokenId}` }
+         const borrowTxData = await yieldLendingContract.methods.borrow(id, value.qty, stringToBytes(""), value.minLoanAmount, value.maxLiquidation).encodeABI();
+         const borrowTX = {
+            to: process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT,
+            value: 0,
+            data: borrowTxData
+         }
+         return { success: true, message: `Borrowed ${30} USDC with Yield Token ${value.tokenId}`, tx: [approvalTx, borrowTX], error: "Failed to Borrow USDC" }
       } catch (error) {
          console.log(error)
          return { error: "Failed to Borrow USDC", contractError: error }

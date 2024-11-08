@@ -1,23 +1,39 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import { yieldLendingContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 import CustomButton from '../cards/button'
+import { useSmartAccount } from '@particle-network/connectkit'
 
 const LiquidateModal = ({ id }: { id?: number | 0 }) => {
-   const account = useAccount()
+   // const account = useAccount()
+   const smartAccount = useSmartAccount()
+   const [address, setAddress] = useState<string>()
    const [value, setValue] = useState({
       tokenId: 0,
       borrower: ''
+   })
+   useEffect(() => {
+      async function get() {
+         const address = await smartAccount?.getAddress()
+         setAddress(address)
+      }
+      get()
    })
    const handleChange = (e: any) => {
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleClick = async () => {
       try {
-         const res = await yieldLendingContract.methods.liquidate(value.tokenId, value.borrower).send({ from: account.address });
-         return { success: true, message: "Yield Token Listed Successfully" }
+         // const res = await yieldLendingContract.methods.liquidate(value.tokenId, value.borrower).send({ from: address });
+         const txData = await yieldLendingContract.methods.liquidate(value.tokenId, value.borrower)
+         const tx = {
+            to: process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT,
+            value: 0,
+            data: txData
+         }
+         return { success: true, message: "Yield Token Listed Successfully", tx, error: "Failed to List Yield Token" }
       } catch (error) {
          console.log(error)
          return { error: "Failed to List Yield Token", contractError: error }

@@ -6,7 +6,6 @@ import { usdcContract, yieldLendingContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 
 const RepayModal = ({ id }: { id?: number }) => {
-   const account = useAccount()
    const [value, setValue] = useState({
       tokenId: 0,
       qty: 0,
@@ -17,12 +16,19 @@ const RepayModal = ({ id }: { id?: number }) => {
    }
    const handleClick = async () => {
       try {
-         const usdcRes = await usdcContract.methods.approve(process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT, 1).send({ from: account.address });
-         //  web3.utils.toWei('10', 'mwei'))
-         console.log(usdcRes)
-         const res = await yieldLendingContract.methods.repay(id).send({ from: account.address });
-         console.log(res)
-         return { success: true, message: "Loan Repaid Successfully" }
+         const usdcTxData = await usdcContract.methods.approve(process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT, 1).encodeABI()
+         const usdcTx = {
+            to: process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT,
+            value: 0,
+            data: usdcTxData
+         }
+         const txData = await yieldLendingContract.methods.repay(id).encodeABI();
+         const tx = {
+            to: process.env.NEXT_PUBLIC_YIELDLENDING_CONTRACT,
+            value: 0,
+            data: txData
+         }
+         return { success: true, message: "Loan Repaid Successfully", error: "Failed to repay Loan - try again", tx: [tx, usdcTx] }
       } catch (error) {
          console.log(error)
          return { error: "Failed to repay Loan - try again", contractError: error }

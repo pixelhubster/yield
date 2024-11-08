@@ -2,26 +2,43 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import InputWithLabel from '../cards/inputWithLabel'
 import CustomButton from '../cards/button'
-import { useAccount } from 'wagmi'
 import { yieldTokenContract } from '@/backend/web3'
 import { gql } from 'graphql-request'
 import queryContract from '@/app/context/query'
 import Web3 from 'web3'
 
 const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
-   const account = useAccount()
    const [data, setData] = useState<any>()
    const [sold, setSold] = useState<any>()
    const [skey, setKey] = useState<any>(0)
    let amountToPay = data?.yieldListeds[skey]?.pricePerShare * data?.yieldListeds[skey]?.amount
    const big = Web3.utils.toWei(BigInt(amountToPay || 0), "ether")
    const handleClick = async () => {
-      try {
-         const res = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).send({ from: account.address, value: amountToPay });
-         return { success: true, message: "Yield Token Bought Successfully" }
-      } catch (error) {
-         return { error: "Failed to Buy Yield Token", contractError: error }
+      // try {
+      // const approvalTxData = await yieldTokenContract.methods.setApprovalForAll(yieldTokenContract.options.address, true).encodeABI();
+      // const approvalTx = {
+      //    to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+      //    value: 0,
+      //    data: approvalTxData
+      // }
+      const userApprovalTxData = await yieldTokenContract.methods.setApprovalForAll(yieldTokenContract.options.address, true).encodeABI();
+      const userApprovalTx = {
+         to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+         value: 0,
+         data: userApprovalTxData
       }
+      const txData = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).encodeABI();
+      console.log(txData)
+      const tx = {
+         to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+         value: amountToPay,
+         data: txData
+      }
+      // const res = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).send({ from: account.address, value: amountToPay });
+      return { success: true, message: "Yield Token Bought Successfully", tx: [userApprovalTx, tx], error: "Failed to Buy Yield Token" }
+      // } catch (error) {
+      //    return { error: "Failed to Buy Yield Token", contractError: error }
+      // }
    }
    useEffect(() => {
       const query = gql`{
@@ -89,22 +106,19 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
                   )
                   )}
                </div>
-
-               {!(s.length > 0) &&
-                  !Number.isNaN(amountToPay) &&
+               {data?.yieldListeds?.length > 0 && s.length === 0 &&
                   <InputWithLabel onChange={() => { }} value='amount' name='Pay $' placeholder={amountToPay.toString()} fill={amountToPay} />
                }
-               {data?.yieldListeds?.length == 0 &&
-                  <div className='w-full h-full flex justify-center items-center text-sm font-semibold p-10 text-gray-600'>None listed</div>
+               {data?.yieldListeds?.length > 0 && s.length > 0 &&
+                  <CustomButton btn='Sold' className='bg-green-500 disabled:bg-green-500' disabled={true} />
                }
-               {s.length > 0 ?
-                  <CustomButton btn='Sold' className='bg-green-500 disabled:bg-green-500' disabled={true} /> :
-                  !Number.isNaN(amountToPay) &&
-                  <>
-                     <CustomButton btn='Buy' handleClick={handleClick} />
-                     <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
-                  </>
+               {
+                  data?.yieldListeds.length > 0 && (s.length === 0) &&
+                  <CustomButton btn='Buy' handleClick={handleClick} />
                }
+               {data?.yieldListeds.length === 0 &&
+                  <p className="py-4 text-center text-[16px] text-gray-600">Yield not listed</p>}
+               <p className="py-4 text-center text-[12px] text-gray-600">You will be prompted to pay for the transaction fee</p>
             </div>
             <label className="modal-backdrop" htmlFor="my_modal_9">Close</label>
          </div>

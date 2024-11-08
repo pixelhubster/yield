@@ -120,6 +120,7 @@ const Map = () => {
             <TileLayer
                attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                url='https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.jpg'
+               // url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                zIndex={10}
             // url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             />

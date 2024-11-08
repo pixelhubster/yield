@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import TextInput from './textInput'
 import { landContract } from '@/backend/web3'
-import { useAccount } from 'wagmi'
 import toast from 'react-hot-toast'
 import CustomButton from './button'
 import { useRouter } from 'next/navigation'
 
 const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Function }) => {
-   const account = useAccount()
    const router = useRouter()
    const [value, setValue] = useState({
       ownershipType: "private"
@@ -18,7 +16,7 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
    const handleRegister = async () => {
-      if (account.status === "disconnected") return toast.error("Wallet not connected")
+      // if (account.status === "disconnected") return toast.error("Wallet not connected")
       try {
          const res = await fetch("/api/register", {
             method: "POST",
@@ -33,11 +31,19 @@ const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Functi
          const data = await res.json()
          // console.log(data)
          if (res.ok) {
-            const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
+            // const tokenId = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).send({ from: account.address })
+            // console.log(tokenId)
+            const txData = await landContract.methods.register(data.cid, String(data.polygon), String(data.center[0]), String(data.center[1]), String(data.polygonId)).encodeABI()
+            const tx  = {
+               to: process.env.NEXT_PUBLIC_LAND_CONTRACT,
+               value: 0,
+               data: txData
+            }
+
             // router.refresh()
             // const search = new URLSearchParams()
             // search.set("search", tokenId)
-            return { success: true, message: "Registered Land Successfully"}
+            return { success: true, message: "Registered Land Successfully", tx, error: "Failed to post data"}
          } else {
             return { error: "Failed to post data"}
          }

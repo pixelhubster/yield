@@ -4,48 +4,86 @@ import Mincard from './cards/mincard'
 import Summary from './cards/summary'
 import BorrowModal from './modals/borrow'
 import RepayModal from './modals/repay'
-import { yieldLendingContract, yieldTokenContract } from '@/backend/web3'
+import { landContract, yieldLendingContract, yieldTokenContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
+import { useSmartAccount } from '@particle-network/connectkit'
+import queryContract from '@/app/context/query'
+import { gql } from 'graphql-request'
 
 const Statistics = ({id}: {id?: number}) => {
-   const account = useAccount()
+   const smartAccount = useSmartAccount()
+   const [address, setAddress] = useState<string>()
    const [data, setData] = useState<any>({})
+   const query = gql` {
+      yieldMinteds(where: {landTokenId: ${Number(id)}}) {
+        id
+        yieldId
+        landTokenId
+        yieldType
+        owner
+        transactionHash
+        blockTimestamp
+        amount
+        blockNumber
+      }
+    }`
+ 
+   useEffect(() => {
+      async function get() {
+         const account = await smartAccount?.getAccount()
+         const address = await smartAccount?.getAddress()
+         setAddress(address)
+      }
+      get()
+   }, [smartAccount])
    useEffect(() => {
       async function getValuation() {
          try {
-            const totalSupply = await yieldTokenContract.methods.totalSupply(id).call({ from: account.address}).then((res: any) => {
+            let yieldId = 0;
+            const res: any = await queryContract(query);
+            if (res.success) {
+               const index = res.data.yieldMinteds.length - 1;
+               yieldId = res.data.yieldMinteds[index].yieldId
+            }
+            const totalSupply = await yieldTokenContract.methods.totalSupply(yieldId).call().then((res: any) => {
                setData((prev: any) => ({ ...prev, totalSupply: Number(res.toString())}))
                return res
-            })
-            const balance = await yieldTokenContract.methods.balanceOf(account.address, id).call().then((res: any) => {
+            }) 
+            const balance = await yieldTokenContract.methods.balanceOf(address, yieldId).call().then((res: any) => {
                setData((prev: any) => ({ ...prev, balance: Number(res.toString())}))
                return res
 
             });
-            console.log(`Token balance for ${account.address}:`, balance);
-            const yieldData = await yieldTokenContract.methods.yieldData(id).call({ from: account.address}).then((res: any) => {
+            // console.log(`Token balance for ${address}:`, balance);
+            const yieldData = await yieldTokenContract.methods.yieldData(yieldId).call({ from: address}).then((res: any) => {
                setData((prev: any) => ({ ...prev, totalYield: Number(res.totalYield.toString()), season: Number(res.season.toString())}))
                return res
             })
             const valuation = await yieldLendingContract.methods
-               .getYieldValuationInUsdc(id)
-               .call({ from: account.address }).then((res: any)=> {
-                  console.log('Valuation:', res)
+               .getYieldValuationInUsdc(yieldId)
+               .call({ from: address }).then((res: any)=> {
                   setData((prev: any) => ({ ...prev, evaluation: Number(res.toString()) }))
                   return res
                })
-
-            // Update state with the fetched valuation
-         } catch (error) {
-            console.error('Error fetching valuation:', error)
+            // const geo = await landContract.methods
+            //    .getLandGeo("720ee6ba01017d67d198d3f11517f5bc", 0)
+            //    .send({ from: "0xf0830060f836B8d54bF02049E5905F619487989e" }).then((res: any)=> {
+            //       setData((prev: any) => ({ ...prev, geo: res.toString() }))
+            //       return res
+            //    })
+            //    console.log(geo)
+               // Update state with the fetched valuation
+            } catch (error) {
+               console.error('Error fetching valuation:', error)
+            }
          }
-      }
-
-      if (account?.address) {
-         getValuation() // Trigger the async function
-      }
-   }, [account.address, id])
-
+         
+         if (address) {
+            getValuation() // Trigger the async function
+         }
+      }, [address, id, query])
+      console.log(data)
+      
    return (
       <div className="w-full h-[18rem] mt-5 p-2 px-0 flex gap-3 overflow-auto custom-scroll">
          <Summary header="Total Supply" data={data.totalSupply || 0} className="bg-black shrink-0" />
