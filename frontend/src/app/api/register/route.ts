@@ -1,5 +1,6 @@
 import pinata from "@/backend/ipfs";
 import { landContract } from "@/backend/web3";
+import { error } from "console";
 import { NextRequest, NextResponse } from "next/server"
 
 const appid = process.env.AGROMONITORING_API_KEY

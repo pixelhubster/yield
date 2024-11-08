@@ -106,7 +106,6 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
                   )
                   )}
                </div>
-
                {data?.yieldListeds?.length > 0 && s.length === 0 &&
                   <InputWithLabel onChange={() => { }} value='amount' name='Pay $' placeholder={amountToPay.toString()} fill={amountToPay} />
                }

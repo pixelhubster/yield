@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
    try {
       const landDetails = await landContract.methods.getAllLandDetails().call()
       const returnData = []
-      for (let index = 0; index < landDetails.length; index++) {
+      for (let index = 0; index <= landDetails.length; index++) {
          if (landDetails[index].id === "") {
             returnData.push({
                polygonId: "",
