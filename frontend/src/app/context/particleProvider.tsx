@@ -35,7 +35,7 @@ const config = createConfig({
       collapseWalletList: false,
       hideContinueButton: false,
       language: 'en-US',
-      mode: 'auto',
+      mode: 'light',
       theme: {
          // '--pcm-accent-color': '',
       },
@@ -71,7 +71,7 @@ const config = createConfig({
          version: '2.0.0'
       })
    ],
-   chains: [solana, baseSepolia]
+   chains: [baseSepolia, solana]
 })
 
 // const particle = new ParticleNetwork({

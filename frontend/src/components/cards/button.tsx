@@ -6,10 +6,16 @@ import { AAWrapProvider, SendTransactionMode, SendTransactionParams, SmartAccoun
 import { useAccount, useSmartAccount } from '@particle-network/connectkit'
 import Web3, { Address, type EIP1193Provider } from 'web3'
 import { parseEther } from 'viem'
+import { landContract } from '@/backend/web3'
 // import { smartAccount } from '@/app/context/particleProvider'
 
 const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: string, handleClick?: Function, className?: string, disabled?: boolean, tx?: any }) => {
    const [loading, setLoading] = useState(false)
+   const [error, setError] = useState({
+      open: false,
+      error: false,
+      message: ''
+   })
    const accounts = useAccount()
    const router = useRouter()
    const smartAccount = useSmartAccount()
@@ -48,6 +54,11 @@ const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: str
                   userOpHash,
                })) || null;
 
+            setError({
+               open: true,
+               error: false,
+               message: txHash as string
+               })
             console.log("Transaction sent:", txHash);
             return { ok: true, hash: txHash }
          } else {
@@ -56,11 +67,16 @@ const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: str
          }
       } catch (error) {
          console.error("Failed to send transaction:", error);
+         setError({
+            open: true,
+            error: true,
+            message: (error as any).message
+         })
          return { ok: false, error: "Failed to send transaction", message: error }
       }
    };
    const click = async () => {
-      if (accounts.isDisconnected) return toast.error("Wallet not connected")
+      if (accounts.isDisconnected) return toast.error("Wallet not connected");
       setLoading(true)
       if (handleClick) {
          try {
@@ -83,6 +99,7 @@ const CustomButton = ({ btn, handleClick, className, disabled, tx }: { btn?: str
                btn || "Submit"
             }
          </button>
+         {error.open && <p className={`text-[12px] space-1 text-center w-full max-h-[5rem] overflow-hidden ${error.error ? 'text-red-300' : 'text-green-400'}`}>{error.message}</p>}
       </>
    )
 }

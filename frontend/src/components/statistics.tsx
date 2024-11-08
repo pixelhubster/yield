@@ -4,7 +4,7 @@ import Mincard from './cards/mincard'
 import Summary from './cards/summary'
 import BorrowModal from './modals/borrow'
 import RepayModal from './modals/repay'
-import { yieldLendingContract, yieldTokenContract } from '@/backend/web3'
+import { landContract, yieldLendingContract, yieldTokenContract } from '@/backend/web3'
 import { useAccount } from 'wagmi'
 import { useSmartAccount } from '@particle-network/connectkit'
 import queryContract from '@/app/context/query'
@@ -65,6 +65,13 @@ const Statistics = ({id}: {id?: number}) => {
                   setData((prev: any) => ({ ...prev, evaluation: Number(res.toString()) }))
                   return res
                })
+            // const geo = await landContract.methods
+            //    .getLandGeo("720ee6ba01017d67d198d3f11517f5bc", 0)
+            //    .send({ from: "0xf0830060f836B8d54bF02049E5905F619487989e" }).then((res: any)=> {
+            //       setData((prev: any) => ({ ...prev, geo: res.toString() }))
+            //       return res
+            //    })
+            //    console.log(geo)
                // Update state with the fetched valuation
             } catch (error) {
                console.error('Error fetching valuation:', error)
@@ -75,7 +82,7 @@ const Statistics = ({id}: {id?: number}) => {
             getValuation() // Trigger the async function
          }
       }, [address, id, query])
-      // console.log(data)
+      console.log(data)
       
    return (
       <div className="w-full h-[18rem] mt-5 p-2 px-0 flex gap-3 overflow-auto custom-scroll">

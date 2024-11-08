@@ -15,6 +15,18 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
    const big = Web3.utils.toWei(BigInt(amountToPay || 0), "ether")
    const handleClick = async () => {
       // try {
+      // const approvalTxData = await yieldTokenContract.methods.setApprovalForAll(yieldTokenContract.options.address, true).encodeABI();
+      // const approvalTx = {
+      //    to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+      //    value: 0,
+      //    data: approvalTxData
+      // }
+      const userApprovalTxData = await yieldTokenContract.methods.setApprovalForAll(yieldTokenContract.options.address, true).encodeABI();
+      const userApprovalTx = {
+         to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+         value: 0,
+         data: userApprovalTxData
+      }
       const txData = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).encodeABI();
       console.log(txData)
       const tx = {
@@ -23,7 +35,7 @@ const BuyYieldModal = ({ id }: { id?: number | 0 }) => {
          data: txData
       }
       // const res = await yieldTokenContract.methods.buyShare(data.yieldListeds[skey].listId, data.yieldListeds[skey].yieldId, data.yieldListeds[skey].amount).send({ from: account.address, value: amountToPay });
-      return { success: true, message: "Yield Token Bought Successfully", tx, error: "Failed to Buy Yield Token" }
+      return { success: true, message: "Yield Token Bought Successfully", tx: [userApprovalTx, tx], error: "Failed to Buy Yield Token" }
       // } catch (error) {
       //    return { error: "Failed to Buy Yield Token", contractError: error }
       // }

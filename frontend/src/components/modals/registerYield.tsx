@@ -6,6 +6,7 @@ import { yieldTokenContract } from '@/backend/web3'
 import { isAllValuesFilled } from '@/app/context/query'
 
 const RegisterYieldModal = ({id}: {id?: number}) => {
+   console.log(id)
    const [value, setValue] = useState({
       tokenId: id,
       yieldType: "",

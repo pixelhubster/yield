@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import TextInput from './textInput'
 import { landContract } from '@/backend/web3'
-import { useAccount } from 'wagmi'
 import toast from 'react-hot-toast'
 import CustomButton from './button'
 import { useRouter } from 'next/navigation'
 
 const RegisterContainer = ({ polygon, setOpen }: { polygon: any, setOpen: Function }) => {
-   const account = useAccount()
    const router = useRouter()
    const [value, setValue] = useState({
       ownershipType: "private"

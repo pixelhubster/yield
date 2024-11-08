@@ -13,14 +13,25 @@ const ListYield = ({ id }: { id?: number }) => {
    const handleChange = (e: any) => {
       setValue((value: any) => ({ ...value, [e.target.name]: e.target.value }))
    }
+   // const handleSmth = async () => {
+   //    const txData = await yieldTokenContract.methods.ownerOf(5).call({ from: "0x1D50DB44A61c62B65c8A9800000081D82a465c1c"})
+   //    console.log(txData)
+   // }
+   // handleSmth()
    const handleClick = async () => {
       // try {
-      // const res = await yieldTokenContract.methods.listTokenForSale(value.tokenId, value.qty, value.pricePerShare).send({ from: account.address});
-      const txData = await yieldTokenContract.methods.listTokenForSale(value.tokenId, value.qty, value.pricePerShare).encodeABI();
+      const approvalTxData = await yieldTokenContract.methods.setApprovalForAll(yieldTokenContract.options.address, true).encodeABI()
+      const approvalTx = {
+         to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
+         value: 0,
+         data: approvalTxData,
+      }
+
+      const txData = await yieldTokenContract.methods.listTokenForSale(id, value.qty, value.pricePerShare).encodeABI();
       const tx = {
          to: process.env.NEXT_PUBLIC_YIELDTOKEN_CONTRACT,
          value: 0,
-         data: txData
+         data: txData,
       }
       return { success: true, message: "Yield Token Listed Successfully", tx, error: "Failed to List Yield Token" }
       // } catch (error) {

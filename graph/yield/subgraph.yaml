@@ -8,9 +8,9 @@ dataSources:
     name: LandToken
     network: base-sepolia
     source:
-      address: "0xF5F7D334B1Dc75C644816BEA608B0af31f6450dc"
+      address: "0x810cB15e1fb9954d2513fD5Eb490f084a49416c7"
       abi: LandToken
-      startBlock: 16359731
+      startBlock: 17658598
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -64,9 +64,9 @@ dataSources:
     name: YieldToken
     network: base-sepolia
     source:
-      address: "0x728A0a11714aeC10C3C28DA5C551E4326ab6a032"
+      address: "0x10B365BC4043Fb4500c33a06EdFA9cc4b255A6eC"
       abi: YieldToken
-      startBlock: 16360219
+      startBlock: 17661000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -102,9 +102,9 @@ dataSources:
     name: YieldLending
     network: base-sepolia
     source:
-      address: "0x1c277cd4602f3d16D4Dd7Ee8Ae2b92e380ff5dA6"
+      address: "0x5a176Aa95797955ce405a39dfbDa6F3209F9cBA0"
       abi: YieldLending
-      startBlock: 16360395
+      startBlock: 17662969
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
